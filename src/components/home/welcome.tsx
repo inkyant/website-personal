@@ -5,6 +5,12 @@ import * as React from 'react';
 
 export default function Welcome() {
 
+    const [width, setWidth] = React.useState(window.innerWidth)
+
+    addEventListener("resize", (event) => {
+        setWidth(window.innerWidth)
+    });
+
     return (
         <section className={styles.welcome}>
             <div className={styles.welcomeContainer}>
@@ -43,8 +49,8 @@ export default function Welcome() {
                         </svg>
                     </div>
                     <div className={styles.lineStart}>
-                        <svg className={`${styles.animateLine} ${styles.line1Svg}`} height="250" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path className="line-center-start" pathLength="1" d={"M 500 0 C 500 300 50 50 50 250"} stroke="white" strokeWidth="3"/>
+                        <svg className={styles.line1Svg} height="250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path pathLength="1" d={"M " + (width/2 - 8.85) + " 0 C " + (width/2 - 8.85) + " 300 50 50 50 250"} stroke="white" strokeWidth="3"/>
                         </svg>    
                     </div>
                 </div>
