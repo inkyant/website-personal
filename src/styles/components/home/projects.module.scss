@@ -2,7 +2,7 @@
 @import '../../globals.scss';
 
 .project {
-    height: 461px;
+    height: 470px;
 }
 
 .project-content {
@@ -55,72 +55,4 @@
 .end {
     height: 300px;
     margin-bottom: 150px;
-}
-
-.end-line {
-    width: 100%;
-}
-
-
-.animate-line {
-    // dashes used to create line drawing animation
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-}
-
-
-// circle animation
-
-.grow-anim {
-    animation: grow 0.25s;
-    animation-fill-mode: forwards;
-}
-
-.ungrow-anim {
-    animation: ungrow 0.25s;
-}
-
-@keyframes grow {
-    0%   { scale: 0; }
-    90%  { scale: 1.1; }
-    100% { scale: 1; }
-}
-
-@keyframes ungrow {
-    0%   { scale: 1; }
-    100% { scale: 0; }
-}
-
-// project animation
-
-.fadein-anim {
-    animation: fadein 0.25s;
-    animation-fill-mode: forwards;
-}
-
-.fade-anim {
-    animation: fade 0.25s;
-}
-
-@keyframes fadein {
-    0%   { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes fade {
-    0%   { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-
-// final line animation
-// note: most of the draw anim is handled in js, this is just for the final line that doesn't go with scroll
-
-.draw-anim {
-    animation: draw 1s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes draw {
-    100% { stroke-dashoffset: 0; }    
 }
