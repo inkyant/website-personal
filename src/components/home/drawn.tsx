@@ -13,9 +13,13 @@ const options = {
     rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
 }
 
-// TODO: use forwarded refs to draw previous and next line fully
+// typescript fun
+export type DrawingHandle = {
+    setDrawn: (percent: number) => void;
+};
 
-export default function Drawn({ path }: { path: string }) {
+
+export default React.forwardRef<DrawingHandle, { path: string, height: number, width: string, drawingCallback?: Function }>(function Drawn({path, height, width, drawingCallback}, ref) {
     
     const [drawnPercent, setDrawnPercent] = React.useState(0)
 
@@ -23,27 +27,40 @@ export default function Drawn({ path }: { path: string }) {
         entries.forEach((entry) => {
           // check if visible, and if is below viewport. or it will animate again as it leaves the viewport
           if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
-            console.log(entry.intersectionRatio)
             setDrawnPercent(entry.intersectionRatio)
+            if (drawingCallback) {
+                drawingCallback()
+            }
           }
         });
     }
     let observer = new IntersectionObserver(intersectionCallback, options);
 
-    const ref = useRef<HTMLInputElement>(null)
+    const drawnRef = useRef<HTMLInputElement>(null)
 
     React.useEffect(() => {
-        if (ref.current) {
-            console.log("observing..")
-            observer.observe(ref.current)
+        if (drawnRef && drawnRef.current) {
+            observer.observe(drawnRef.current)
         }
     }, [])
+
+    const inputRef = useRef<SVGPathElement>(null);
+
+    React.useImperativeHandle(ref, () => {
+        return {
+            setDrawn(percent: number) {
+                if (inputRef.current) {
+                    inputRef.current.style.strokeDashoffset = ""+(1-percent)
+                }
+            }
+        };
+    }, []);
     
     return (
-        <div ref={ref}>
-            <svg fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path pathLength="1" strokeDasharray="1" strokeDashoffset={1-drawnPercent} d={path} stroke="white" strokeWidth="3"/>
+        <div ref={drawnRef}>
+            <svg height={height} width={width} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path ref={inputRef} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent }} d={path} stroke="white" strokeWidth="3"/>
             </svg>
         </div>
     );
-}
+});

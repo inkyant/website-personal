@@ -5,12 +5,6 @@ import * as React from 'react';
 
 export default function Welcome() {
 
-    const [width, setWidth] = React.useState(window.innerWidth)
-
-    addEventListener("resize", (event) => {
-        setWidth(window.innerWidth)
-    });
-
     return (
         <section className={styles.welcome}>
             <div className={styles.welcomeContainer}>
@@ -47,11 +41,6 @@ export default function Welcome() {
                         <svg width="24" height="40" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.9393 38.7707C11.5251 39.3565 12.4749 39.3565 13.0607 38.7707L22.6066 29.2247C23.1924 28.639 23.1924 27.6892 22.6066 27.1034C22.0208 26.5176 21.0711 26.5176 20.4853 27.1034L12 35.5887L3.51472 27.1034C2.92893 26.5176 1.97919 26.5176 1.3934 27.1034C0.807611 27.6892 0.807611 28.639 1.3934 29.2247L10.9393 38.7707ZM10.5 0.210022V37.71H13.5V0.210022H10.5Z" fill="white"/>
                         </svg>
-                    </div>
-                    <div className={styles.lineStart}>
-                        <svg className={styles.line1Svg} height="250" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path pathLength="1" d={"M " + (width/2 - 8.85) + " 0 C " + (width/2 - 8.85) + " 300 50 50 50 250"} stroke="white" strokeWidth="3"/>
-                        </svg>    
                     </div>
                 </div>
             </div>
