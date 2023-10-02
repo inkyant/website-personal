@@ -13,7 +13,7 @@ export default function Project({title, text, images}: {title: string, text: str
 
     return (
     <section className={styles.project}>
-        <div className={styles.projectContainer}>
+        <div>
             <div className={styles.projectLineDot}>
                 <div className={styles.circleContainer}>
                     <div className={styles.circle}></div>
