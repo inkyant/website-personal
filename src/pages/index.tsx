@@ -23,11 +23,15 @@ export default function Home() {
     <Layout>
       <Welcome></Welcome>
 
-      <Lines></Lines>
+      <div>
+        <Lines></Lines>
 
-      {projectSections}
+        <div style={{paddingTop: "250px"}}>
+          {projectSections}
+        </div>
 
-      <End></End>
+        <End></End>
+      </div>
     </Layout>
   )
 }
