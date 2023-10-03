@@ -8,25 +8,33 @@ export default function Lines() {
 
     const [screenWidth, setScreenWidth] = React.useState(window.innerWidth)
 
-    addEventListener("resize", () => {
-        setScreenWidth(window.innerWidth)
-    });
-
     // make refs: one for each project, and two more for start + end
     const refs = Array(projects.length + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
 
     const lines = projects.map((project, index) => 
         <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={project.path}></Drawn>
     )
+
+    React.useEffect(() => {
+        let onResize = () => setScreenWidth(window.innerWidth)
+        let onScroll = () => {
+            if (window.scrollY === 0) {drawingCallback(-1)}
+            if (window.scrollY + window.innerHeight + 200 >= document.documentElement.scrollHeight) {
+                refs[refs.length-1].current?.animDrawn(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight)
+            }
+        }
+        addEventListener("resize", onResize);
+        addEventListener("scroll", onScroll);
+    
+        return () => {removeEventListener("resize", onResize); removeEventListener("scroll", onScroll)};
+    }, []);
     
     function drawingCallback(id: number) {
         refs.forEach((ref, index) => {
-            if (ref.current) {
-                if (index < id) {
-                    ref.current.setDrawn(1)
-                } else if (index > id) {
-                    ref.current.setDrawn(0)
-                }
+            if (index < id) {
+                ref.current?.setDrawn(1)
+            } else if (index > id) {
+                ref.current?.setDrawn(0)
             }
         })
     }

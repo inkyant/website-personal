@@ -1,6 +1,8 @@
 
 import React, { useRef } from "react";
 
+import { drawAnim } from '@styles/components/home/projects.module.scss'
+
 // configure the settings. 
 // precision is the % step at which we animate, for example 0.01 draws 1% of the line for every 1% scrolled
 const PRECISION = 0.01
@@ -16,12 +18,14 @@ const options = {
 // typescript fun
 export type DrawingHandle = {
     setDrawn: (percent: number) => void;
+    animDrawn: (enable: boolean) => void;
 };
 
 
 export default React.forwardRef<DrawingHandle, { path: string, height: number, width: string, drawingCallback?: Function }>(function Drawn({path, height, width, drawingCallback}, ref) {
     
     const [drawnPercent, setDrawnPercent] = React.useState(0)
+    const [isEndAnim, setIsEndAnim] = React.useState(false)
 
     let intersectionCallback: IntersectionObserverCallback = (entries, observer) => {
         entries.forEach((entry) => {
@@ -36,7 +40,7 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     }
     let observer = new IntersectionObserver(intersectionCallback, options);
 
-    const drawnRef = useRef<HTMLInputElement>(null)
+    const drawnRef = useRef<SVGSVGElement>(null)
 
     React.useEffect(() => {
         if (drawnRef && drawnRef.current) {
@@ -52,14 +56,17 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
                 if (inputRef.current) {
                     inputRef.current.style.strokeDashoffset = ""+(1-percent)
                 }
+            },
+            animDrawn(enable: boolean) {
+                setIsEndAnim(enable)
             }
         };
     }, []);
     
     return (
-        <div ref={drawnRef}>
-            <svg height={height} width={width} fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path ref={inputRef} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent }} d={path} stroke="white" strokeWidth="3"/>
+        <div>
+            <svg ref={drawnRef} height={height} width={width} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path ref={inputRef} className={isEndAnim ? drawAnim : ''} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent}} d={path} stroke="white" strokeWidth="3"/>
             </svg>
         </div>
     );
