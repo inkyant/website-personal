@@ -27,25 +27,27 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     const [drawnPercent, setDrawnPercent] = React.useState(0)
     const [isEndAnim, setIsEndAnim] = React.useState(false)
 
-    let intersectionCallback: IntersectionObserverCallback = (entries, observer) => {
-        entries.forEach((entry) => {
-          // check if visible, and if is below viewport. or it will animate again as it leaves the viewport
-          if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
-            setDrawnPercent(entry.intersectionRatio)
-            if (drawingCallback) {
-                drawingCallback()
-            }
-          }
-        });
-    }
-    let observer = new IntersectionObserver(intersectionCallback, options);
-
     const drawnRef = useRef<SVGSVGElement>(null)
 
     React.useEffect(() => {
+        let intersectionCallback: IntersectionObserverCallback = (entries, observer) => {
+            entries.forEach((entry) => {
+              // check if visible, and if is below viewport. or it will animate again as it leaves the viewport
+              if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
+                setDrawnPercent(entry.intersectionRatio)
+                if (drawingCallback) {
+                    drawingCallback()
+                }
+              }
+            });
+        }
+        let observer = new IntersectionObserver(intersectionCallback, options);
+
         if (drawnRef && drawnRef.current) {
             observer.observe(drawnRef.current)
         }
+
+        return () => observer.disconnect()
     }, [])
 
     const inputRef = useRef<SVGPathElement>(null);
