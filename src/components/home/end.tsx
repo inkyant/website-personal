@@ -12,12 +12,10 @@ export default function End() {
     const [animating, setAnimating] = React.useState(false)
 
     React.useEffect(() => {
-        if (circleRef.current) {
-            // on visible, animate the circle in
-            return onVisible([circleRef.current], animOptions, 
-                (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
-            )
-        }
+        // on visible, animate the circle in
+        return onVisible([circleRef.current], animOptions, 
+            (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
+        )
     }, [])
 
     return (

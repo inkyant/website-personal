@@ -19,12 +19,10 @@ export default function Project({title, text, images}: {title: string, text: str
     const [animating, setAnimating] = React.useState(false)
 
     React.useEffect(() => {
-        if (circleRef.current && projectRef.current) {
-            // when they are visible, animate them in
-            return onVisible([circleRef.current, projectRef.current], animOptions,
-                (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
-            )
-        }
+        // when they are visible, animate them in
+        return onVisible([circleRef.current, projectRef.current], animOptions,
+            (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
+        )
     }, [])
 
     return (

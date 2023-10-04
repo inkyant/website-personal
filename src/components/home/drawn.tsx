@@ -19,19 +19,16 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     const drawnRef = useRef<SVGSVGElement>(null)
 
     React.useEffect(() => {
-        if (drawnRef.current) {
-
-            let draw = (entry: IntersectionObserverEntry) => {
-                // if the line is visible, draw it! Must be below the screen or will animate as it leaves at the top of screen
-                if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
-                    setDrawnPercent(entry.intersectionRatio)
-                    if (drawingCallback) drawingCallback()
-                }
+        let draw = (entry: IntersectionObserverEntry) => {
+            // if the line is visible, draw it! Must be below the screen or will animate as it leaves at the top of screen
+            if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
+                setDrawnPercent(entry.intersectionRatio)
+                if (drawingCallback) drawingCallback()
             }
-
-            // function to run callback when comes on screen (configured with 'options')
-            return onVisible([drawnRef.current], lineAnimOptions, draw)
         }
+
+        // function to run callback when comes on screen (configured with 'options')
+        return onVisible([drawnRef.current], lineAnimOptions, draw)
     }, [])
 
     const inputRef = useRef<SVGPathElement>(null);
