@@ -8,6 +8,7 @@
 .project-content {
     width: 80%;
     margin: 0 10% 0 100px;
+    opacity: 0;
 }
 
 .project-title {
@@ -31,24 +32,15 @@
     }
 }
 
-.circle-container {
+.circle {
     height: 26px;
     width: 26px;
     position: absolute;
-}
-
-.circle {
-    height: 100%;
-    width: 100%;
+    left: 37px; // circles are 50 px from the side
     scale: 0;
     margin: auto;
     background-color: $color-accent;
     border-radius: 50%;
-}
-
-.project-line-dot {
-    position: absolute;
-    left: 37px; // circles are 50 px from the side
 }
 
 .end {
@@ -65,4 +57,49 @@
     @keyframes draw {
         100% { stroke-dashoffset: 0; }    
     }
+
+    
+    // circle animation
+
+    .growAnim {
+        animation: grow 0.25s;
+        animation-fill-mode: forwards;
+    }
+
+    .ungrowAnim {
+        animation: ungrow 0.25s;
+    }
+
+    @keyframes grow {
+        0%   { scale: 0; }
+        90%  { scale: 1.1; }
+        100% { scale: 1; }
+    }
+
+    @keyframes ungrow {
+        0%   { scale: 1; }
+        100% { scale: 0; }
+    }
+
+    // project animation
+
+    .fadeinAnim {
+        animation: fadein 0.25s;
+        animation-fill-mode: forwards;
+    }
+
+    .fadeAnim {
+        animation: fade 0.25s;
+    }
+
+    @keyframes fadein {
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @keyframes fade {
+        0%   { opacity: 1; }
+        100% { opacity: 0; }
+    }
+
 }

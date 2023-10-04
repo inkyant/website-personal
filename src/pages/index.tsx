@@ -13,6 +13,22 @@ export const projects = [
   {title: "mann",   text: 'lorem ipsum dolor sit amet anoewuniuren iwniure niurn ijwdnf', path: "M13 0.5C3.28773 54.7716 38.6635 117.5 25.5 150.5C-46.5 331 79.409 315.61 13 467"}
 ]
 
+// configure the settings for animation
+// precision is the % step at which we animate, for example 0.01 draws 1% of the line for every 1% scrolled
+const PRECISION = 0.01
+// the pixels above the bottom of the viewport at which the line is "drawn" (just for the percent intersection, the line can go up)
+export const ANIM_MARGIN = 300
+// options is used by IntersectionObserver, see the docs. We configure it to callback every precision% and 
+// only call back at ANIM_MARGIN px above the bottom of the viewport
+export const lineAnimOptions = {
+    threshold: Array.from({length: (1 / PRECISION) + 1}, (value, index) => index*PRECISION),
+    rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
+}
+export const animOptions = {
+  rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
+}
+
+
 export default function Home() {
 
   const projectSections = projects.map((project, index) =>
