@@ -15,10 +15,16 @@ export default function Lines() {
         <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={project.path}></Drawn>
     )
 
+    // set up animation for first line and last line
     React.useEffect(() => {
+        // first line has to start in middle of screen
         let onResize = () => setScreenWidth(window.innerWidth)
+
         let onScroll = () => {
+            // if scroll to top, IntersectionObserver does not always catch, so undraw all
             if (window.scrollY === 0) {drawingCallback(-1)}
+
+            // last line has special animation when reacted the bottom
             if (window.scrollY + window.innerHeight + 200 >= document.documentElement.scrollHeight) {
                 refs[refs.length-1].current?.animDrawn(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight)
             }
