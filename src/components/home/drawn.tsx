@@ -47,10 +47,10 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     }, []);
     
     return (
-        <div>
-            <svg ref={drawnRef} height={height} width={width} fill="none" xmlns="http://www.w3.org/2000/svg">
+        <>
+            <svg style={{display: "block"}} ref={drawnRef} height={height} width={width} fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path ref={inputRef} className={isEndAnim ? drawAnim : ''} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent}} d={path} stroke="white" strokeWidth="3"/>
             </svg>
-        </div>
+        </>
     );
 });
