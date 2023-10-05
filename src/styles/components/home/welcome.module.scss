@@ -1,18 +1,6 @@
 
 @import '../../globals.scss';
 
-.welcome-icons-container {
-    position: absolute;
-    min-height: 200px;
-    height: 40vh;
-    width: 100%;
-}
-
-.icon {
-    width: 10%;
-    position: absolute;
-}
-
 .welcome-text {
     font-size: 16px;
     text-align: center;
@@ -32,7 +20,6 @@
     margin-top: 16px;
 
     position: relative;
-    width: 100%;
 
     .welcome-arrow, .line-start {
         // makes them centered and on top of each other
@@ -40,7 +27,6 @@
         margin: 0 auto;
         left: 0;
         right: 0;
-        width: 100%;
     }
 
     .welcome-arrow {

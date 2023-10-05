@@ -21,10 +21,11 @@ export default function End() {
     return (
         <section className={styles.end}>
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
-
-            <div className={styles.projectLineDot}>
-                <div className={styles.circleContainer}>
-                    <div className={styles.circle}></div>
+            <div className={styles.endLinksContainer}>
+                <div className={styles.endLinks}>
+                    <a>Email</a>
+                    <a>Github</a>
+                    <a>Linkedin</a>
                 </div>
             </div>
         </section>

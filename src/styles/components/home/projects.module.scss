@@ -44,8 +44,24 @@
 }
 
 .end {
-    height: 300px;
-    margin-bottom: 150px;
+    height: 450px;
+}
+
+.endLinksContainer {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+
+    position: relative;
+    left: 400px;
+    height: 100%;
+    width: fit-content;
+}
+
+.endLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
