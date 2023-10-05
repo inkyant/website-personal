@@ -12,7 +12,7 @@ export default function Layout({
 }) {
   return (
     <>
-      <div id="scrollArea" style={{position: 'relative', height: '100vh', overflowY: 'auto', overflowX: 'hidden', perspective: '10px'}}>
+      <div id="scrollArea" style={{position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', overflowY: 'auto', overflowX: 'hidden', perspective: '10px'}}>
         <Header></Header>
         {children}
         <Footer></Footer>
