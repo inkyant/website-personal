@@ -23,9 +23,9 @@ export default function End() {
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
             <div className={styles.endLinksContainer}>
                 <div className={styles.endLinks}>
-                    <a>Email</a>
-                    <a>Github</a>
-                    <a>Linkedin</a>
+                    <a href="mailto:apfurman@ucsc.edu">Email</a>
+                    <a href="https://github.com/inkyant">Github</a>
+                    <a href="https://www.linkedin.com/in/anthony-furman-256b44284/">Linkedin</a>
                 </div>
             </div>
         </section>

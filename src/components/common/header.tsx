@@ -18,8 +18,8 @@ export default function Header() {
                     Anthony Furman.
                 </a>
                 <nav className={styles.headerNav}>
-                    <a href="" className={styles.headerNavItem}>Home</a>
-                    <a href="" className={styles.headerNavItem}>About</a>
+                    <a href="/" className={styles.headerNavItem}>Home</a>
+                    <a href="/about" className={styles.headerNavItem}>About</a>
                     <a onClick={onClickContact} className={styles.headerNavItem}>Contact</a>
                 </nav>
             </div>

@@ -7,8 +7,8 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
           <div className={styles.footerNav}>
-              <a href="" className={styles.footerNavItem}>Home</a>
-              <a href="" className={styles.footerNavItem}>About</a>
+              <a href="/" className={styles.footerNavItem}>Home</a>
+              <a href="/about" className={styles.footerNavItem}>About</a>
           </div>
           <p className={styles.footerCopyright}>
               Designed and built by Anthony Furman.
