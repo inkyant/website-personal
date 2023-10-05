@@ -66,15 +66,16 @@ export default function Lines() {
     }
 
     const rad = 20 // radius, ie length, of the arrow at the end
+    const [xPos, yPos] = [300, 225]
 
     return (
         <div style={{position: 'absolute', left: '37px', width: "60%"}}>
             <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 45.85) + " 0 C " + (screenWidth/2 - 45.85) + " 300 50 50 13 250"}></Drawn>
             {lines}
             <svg ref={arrowRef} className={animating ? fadeinAnim : fadeAnim} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d={"M 301 226 L "+(300 - rad*Math.cos(Math.PI/4))+" "+(225 - rad*Math.sin(Math.PI/4))+" M 300 225 L "+(300 - rad*Math.cos(Math.PI/4))+" "+(225 + rad*Math.sin(Math.PI/4))} stroke="white" strokeWidth="3"/>
+                <path d={"M "+(xPos+1)+" "+(yPos+1)+" L "+(xPos - rad*Math.cos(Math.PI/4))+" "+(yPos - rad*Math.sin(Math.PI/4))+" M "+xPos+" "+yPos+" L "+(xPos - rad*Math.cos(Math.PI/4))+" "+(yPos + rad*Math.sin(Math.PI/4))} stroke="white" strokeWidth="3"/>
             </svg>
-            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path="M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 200 225 300 225"></Drawn>
+            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-100)+" "+yPos+" "+xPos+" "+yPos}></Drawn>
         </div>
     )
 }

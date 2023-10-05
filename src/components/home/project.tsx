@@ -10,7 +10,7 @@ export default function Project({title, text, images}: {title: string, text: str
     let slider;
 
     if (images) {
-        // TODO: move swiper.js to react
+        // TODO: add swiper
     }
 
     const circleRef = React.useRef<HTMLDivElement>(null)
