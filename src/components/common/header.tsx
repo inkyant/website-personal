@@ -3,6 +3,14 @@ import React from "react"
 import * as styles from '@styles/components/common/header.module.scss'
 
 export default function Header() {
+
+    function onClickContact() {
+        const scrollArea = document.querySelector("#scrollArea")
+        if (scrollArea) {
+            scrollArea.scrollTop = scrollArea.scrollHeight - scrollArea.clientHeight
+        }
+    }
+
     return (
         <header className={styles.header}>
             <div className={styles.headerContainer}>
@@ -12,7 +20,7 @@ export default function Header() {
                 <nav className={styles.headerNav}>
                     <a href="" className={styles.headerNavItem}>Home</a>
                     <a href="" className={styles.headerNavItem}>About</a>
-                    <a href="" className={styles.headerNavItem}>Contact</a>
+                    <a onClick={onClickContact} className={styles.headerNavItem}>Contact</a>
                 </nav>
             </div>
         </header>
