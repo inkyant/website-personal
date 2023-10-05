@@ -26,24 +26,28 @@ export default function Lines() {
         // first line has to start in middle of screen
         let onResize = () => setScreenWidth(window.innerWidth)
 
+        let scrollArea = document.querySelector("#scrollArea")
+
         let onScroll = () => {
             // if scroll to top, IntersectionObserver does not always catch, so undraw all
-            if (window.scrollY === 0) {drawingCallback(-1)}
+            if (scrollArea?.scrollTop === 0) {drawingCallback(-1)}
 
             // last line has special animation when reacted the bottom
-            if (window.scrollY + window.innerHeight + 200 >= document.documentElement.scrollHeight) {
-                refs[refs.length-1].current?.animDrawn(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight)
+            let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
+            if (isCloseToBottom(200)) {
+                let close = isCloseToBottom(1)
+                if (close != null) refs[refs.length-1].current?.animDrawn(close)
             }
         }
         addEventListener("resize", onResize);
-        addEventListener("scroll", onScroll);
+        scrollArea?.addEventListener("scroll", onScroll);
     
-        return () => {removeEventListener("resize", onResize); removeEventListener("scroll", onScroll)};
+        return () => {removeEventListener("resize", onResize); scrollArea?.removeEventListener("scroll", onScroll)};
     }, []);
 
     React.useEffect(() => {
         // when they are visible, animate them in
-        return onVisible([arrowRef.current], {rootMargin: "0px 0px -65px 0px", threshold: 1},
+        return onVisible([arrowRef.current], {rootMargin: "0px 0px -65px 0px", threshold: 1, root: document.querySelector("#scrollArea"),},
             (entry: IntersectionObserverEntry) => {
             setTimeout(() => {
                 setAnimating(entry.isIntersecting);
@@ -68,9 +72,9 @@ export default function Lines() {
             <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 45.85) + " 0 C " + (screenWidth/2 - 45.85) + " 300 50 50 13 250"}></Drawn>
             {lines}
             <svg ref={arrowRef} className={animating ? fadeinAnim : fadeAnim} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d={"M 161 421 L "+(160 - rad*Math.cos(Math.PI/4))+" "+(420 - rad*Math.sin(Math.PI/4))+" M 160 420 L "+(160 + rad*Math.cos(Math.PI/4))+" "+(420 - rad*Math.sin(Math.PI/4))} stroke="white" strokeWidth="3"/>
+                <path d={"M 301 226 L "+(300 - rad*Math.cos(Math.PI/4))+" "+(225 - rad*Math.sin(Math.PI/4))+" M 300 225 L "+(300 - rad*Math.cos(Math.PI/4))+" "+(225 + rad*Math.sin(Math.PI/4))} stroke="white" strokeWidth="3"/>
             </svg>
-            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path="M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 180 228 160 420"></Drawn>
+            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path="M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 200 225 300 225"></Drawn>
         </div>
     )
 }

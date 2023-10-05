@@ -6,6 +6,7 @@ import Welcome from "@components/home/welcome";
 import Project from "@components/home/project";
 import Layout from "@components/layout";
 import Lines from "@components/home/lines";
+import IconsBackground from "@components/home/iconsBackground";
 
 export const projects = [
   {title: "test",   text: 'lorem ipsum dolor sit amet anoewuniuren iwniure niurn ijwdnf', path: "M13 0.5C-30.5 285.5 94.5 281.5 13 470"},
@@ -23,9 +24,11 @@ export const ANIM_MARGIN = 300
 export const lineAnimOptions = {
     threshold: Array.from({length: (1 / PRECISION) + 1}, (value, index) => index*PRECISION),
     rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
+    root: document.querySelector("#scrollArea"),
 }
 export const animOptions = {
   rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
+  root: document.querySelector("#scrollArea"),
 }
 
 
@@ -37,6 +40,7 @@ export default function Home() {
 
   return (
     <Layout>
+      <IconsBackground/>
       <Welcome></Welcome>
 
       <div>

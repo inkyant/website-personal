@@ -11,10 +11,12 @@ export default function Layout({
   children: React.ReactNode
 }) {
   return (
-    <div>
-      <Header></Header>
-      {children}
-      <Footer></Footer>
-    </div>
+    <>
+      <div id="scrollArea" style={{position: 'relative', height: '100vh', overflowY: 'auto', overflowX: 'hidden', perspective: '10px'}}>
+        <Header></Header>
+        {children}
+        <Footer></Footer>
+      </div>
+    </>
   )
 }
