@@ -13,7 +13,7 @@
 }
 
 .header-title {
-    font-size: 24px;
+    font-size: 36px;
     width:fit-content;
 }
 
@@ -22,7 +22,7 @@
     gap: 18px;
 
     &-item {
-        font-size: 16px;
+        font-size: 24px;
         color: $color-secondary;
         cursor: pointer;
     }
