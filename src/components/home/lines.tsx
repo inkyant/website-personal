@@ -14,7 +14,7 @@ const yArrow = RADIUS*Math.sin(ANGLE)
 
 export default function Lines() {
 
-    const [screenWidth, setScreenWidth] = React.useState(document.body.clientWidth) //window.innerWidth doesn't always work
+    let [screenWidth, setScreenWidth] = [600, (_: number) => {console.error('screen resized without loaded component')}]
     
     const [animating, setAnimating] = React.useState(false)
     const arrowRef = React.useRef<SVGSVGElement>(null)
@@ -30,6 +30,9 @@ export default function Lines() {
 
     // set up animation for first line and last line
     React.useEffect(() => {
+
+        [screenWidth, setScreenWidth] = React.useState(document.body.clientWidth) //window.innerWidth doesn't always work
+
         // first line has to start in middle of screen
         let onResize = () => {
             setScreenWidth(document.body.clientWidth)
