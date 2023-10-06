@@ -21,7 +21,6 @@ export default function Header() {
                 <nav className={styles.headerNav}>
                     <Link to="/" className={styles.headerNavItem}>Home</Link>
                     <Link to="/about" className={styles.headerNavItem}>About</Link>
-                    <a onClick={onClickContact} className={styles.headerNavItem}>Contact</a>
                 </nav>
             </div>
         </header>
