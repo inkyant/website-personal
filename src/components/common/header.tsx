@@ -1,6 +1,7 @@
 
 import React from "react"
 import * as styles from '@styles/components/common/header.module.scss'
+import { Link } from "gatsby-link"
 
 export default function Header() {
 
@@ -18,8 +19,8 @@ export default function Header() {
                     Anthony Furman.
                 </a>
                 <nav className={styles.headerNav}>
-                    <a href="/" className={styles.headerNavItem}>Home</a>
-                    <a href="/about" className={styles.headerNavItem}>About</a>
+                    <Link to="/" className={styles.headerNavItem}>Home</Link>
+                    <Link to="/about" className={styles.headerNavItem}>About</Link>
                     <a onClick={onClickContact} className={styles.headerNavItem}>Contact</a>
                 </nav>
             </div>

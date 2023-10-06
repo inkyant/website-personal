@@ -14,7 +14,7 @@ const yArrow = RADIUS*Math.sin(ANGLE)
 
 export default function Lines() {
 
-    const [screenWidth, setScreenWidth] = React.useState(window.innerWidth)
+    const [screenWidth, setScreenWidth] = React.useState(document.body.clientWidth) //window.innerWidth doesn't always work
     
     const [animating, setAnimating] = React.useState(false)
     const arrowRef = React.useRef<SVGSVGElement>(null)
@@ -31,7 +31,10 @@ export default function Lines() {
     // set up animation for first line and last line
     React.useEffect(() => {
         // first line has to start in middle of screen
-        let onResize = () => setScreenWidth(window.innerWidth)
+        let onResize = () => {
+            setScreenWidth(document.body.clientWidth)
+        }
+        
 
         let scrollArea = document.querySelector("#scrollArea")
 
@@ -58,7 +61,7 @@ export default function Lines() {
             (entry: IntersectionObserverEntry) => {
             setTimeout(() => {
                 setAnimating(entry.isIntersecting);
-            }, entry.isIntersecting && !isArrowPointDown ? 750 : 0); }
+            }, (entry.isIntersecting && !isArrowPointDown) ? 750 : 0); }
         )
     }, [])
     
@@ -76,7 +79,7 @@ export default function Lines() {
 
     return (
         <div style={{position: 'absolute', left: '37px', width: "60%"}}>
-            <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 45.85) + " 0 C " + (screenWidth/2 - 45.85) + " 300 50 50 13 250"}></Drawn>
+            <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 37) + " 0 C " + (screenWidth/2 - 37) + " 300 50 50 13 250"}></Drawn>
             {lines}
             <svg ref={arrowRef} className={animating ? fadeinAnim : fadeAnim} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d={"M "+(xPos+1)+" "+(yPos+1)+" L "+(xPos - xArrow)+" "+(yPos - yArrow)+" M "+xPos+" "+yPos+" L "+(xPos + (xArrow*(isArrowPointDown ? 1 : -1)))+" "+(yPos + (yArrow*(isArrowPointDown ? -1 : 1)))} stroke="white" strokeWidth="3"/>
