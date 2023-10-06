@@ -20,7 +20,7 @@ export default function Project({title, text, images}: {title: string, text: str
 
     React.useEffect(() => {
         // when they are visible, animate them in
-        return onVisible([circleRef.current, projectRef.current], animOptions,
+        return onVisible([circleRef.current, projectRef.current], animOptions(),
             (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
         )
     }, [])

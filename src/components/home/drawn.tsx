@@ -28,7 +28,7 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
         }
 
         // function to run callback when comes on screen (configured with 'options')
-        return onVisible([drawnRef.current], lineAnimOptions, draw)
+        return onVisible([drawnRef.current], lineAnimOptions(), draw)
     }, [])
 
     const inputRef = useRef<SVGPathElement>(null);

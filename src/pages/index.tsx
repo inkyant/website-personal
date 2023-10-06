@@ -44,15 +44,16 @@ const PRECISION = 0.01
 export const ANIM_MARGIN = 300
 // options is used by IntersectionObserver, see the docs. We configure it to callback every precision% and 
 // only call back at ANIM_MARGIN px above the bottom of the viewport
-export const lineAnimOptions = {
+export const lineAnimOptions = () => {return {
     threshold: Array.from({length: (1 / PRECISION) + 1}, (value, index) => index*PRECISION),
     rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
     root: document.querySelector("#scrollArea"),
-}
-export const animOptions = {
+}}
+
+export const animOptions = () => {return {
   rootMargin: "0px 0px -" + ANIM_MARGIN + "px 0px",
   root: document.querySelector("#scrollArea"),
-}
+}}
 
 
 export default function Home() {

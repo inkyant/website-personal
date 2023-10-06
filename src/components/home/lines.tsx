@@ -1,6 +1,6 @@
 
 import Drawn from "@components/home/drawn";
-import { animOptions, projects } from "@pages";
+import { projects } from "@pages";
 import React from "react";
 import { DrawingHandle } from "./drawn";
 import onVisible from "@components/common/visible";

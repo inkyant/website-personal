@@ -16,7 +16,7 @@ export default function Welcome() {
 
     React.useEffect(() => {
         // when arrow moves up, fade
-        return onVisible([arrowRef.current], animOptions,
+        return onVisible([arrowRef.current], animOptions(),
             (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
         )
     }, [])
