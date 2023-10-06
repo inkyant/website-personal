@@ -30,14 +30,13 @@ export default function Lines() {
 
     // set up animation for first line and last line
     React.useEffect(() => {
+        let scrollArea = document.querySelector("#scrollArea")
+
         // first line has to start in middle of screen
         let onResize = () => {
-            setScreenWidth(document.body.offsetWidth)
+            if (scrollArea) setScreenWidth(scrollArea.clientWidth)
         }
         onResize() // call because could not set in SSR
-        
-
-        let scrollArea = document.querySelector("#scrollArea")
 
         let onScroll = () => {
             // if scroll to top, IntersectionObserver does not always catch, so undraw all
