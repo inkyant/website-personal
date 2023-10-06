@@ -32,7 +32,7 @@ export default function Lines() {
     React.useEffect(() => {
         // first line has to start in middle of screen
         let onResize = () => {
-            setScreenWidth(document.body.clientWidth)
+            setScreenWidth(document.body.offsetWidth)
         }
         onResize() // call because could not set in SSR
         
