@@ -46,7 +46,13 @@ export default function Lines() {
             let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
             if (isCloseToBottom(200)) {
                 let close = isCloseToBottom(1)
-                if (close != null) refs[refs.length-1].current?.animDrawn(close)
+                if (close != null) {
+                    refs[refs.length-1].current?.animDrawn(close)
+                    setTimeout(() => {
+                        let nowClose = isCloseToBottom(1)
+                        nowClose != null && setAnimating(nowClose)
+                    }, (close && !isArrowPointDown) ? 750 : 0)
+                }
             }
         }
         addEventListener("resize", onResize);
@@ -54,16 +60,6 @@ export default function Lines() {
     
         return () => {removeEventListener("resize", onResize); scrollArea?.removeEventListener("scroll", onScroll)};
     }, []);
-
-    React.useEffect(() => {
-        // when they are visible, animate them in
-        return onVisible([arrowRef.current], {rootMargin: "0px 0px -65px 0px", threshold: 1, root: document.querySelector("#scrollArea"),},
-            (entry: IntersectionObserverEntry) => {
-            setTimeout(() => {
-                setAnimating(entry.isIntersecting);
-            }, (entry.isIntersecting && !isArrowPointDown) ? 750 : 0); }
-        )
-    }, [])
     
     function drawingCallback(id: number) {
         refs.forEach((ref, index) => {
