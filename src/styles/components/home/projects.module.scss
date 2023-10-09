@@ -44,6 +44,13 @@
     border-radius: 50%;
 }
 
+// TODO: get more permanent fix
+@media (max-width: 600px) {
+    .circleEnd {    
+        top: 2680px
+    }
+}
+
 .end {
     height: 450px;
 }
