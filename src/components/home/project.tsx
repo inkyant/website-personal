@@ -27,7 +27,7 @@ export default function Project({title, text, images}: {title: string, text: str
 
     return (
     <section className={styles.project}>
-        <div ref={projectRef} style={{position: 'relative'}}>
+        <div ref={projectRef}>
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
 
             <div className={`${styles.projectContent} ${animating ? styles.fadeinAnim : styles.fadeAnim}`}>
