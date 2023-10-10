@@ -11,13 +11,10 @@ import IconsBackground from "@components/home/iconsBackground";
 export const projects = [
   {title: "Robotics",   
     text: `I was the programming director for FRC team 972 Iron Claw Robotics, and with my contributions our team led the 
-    top 8 alliance in the world (we had previously never even made it to championships). Along with my responsibilities
-    managing the programming and the curriculum, I also led projects for autonomous path following on a swerve drivetrain 
-    and vision processing for robot position estimation. I implemented industy standard code processes to help more people 
-    contribute to the team by creating a tasklist and following PR procedures with automatic code tests and expert code reviews. 
-    I also created a curriculum to teach the new students various aspects of robotics, from electronics to control theory to 
-    autonomous movement and networks. I was also a part of the Curriculum Council making decisions on how to manage the
-    50 student team.`, 
+    top 8 alliance in the world. Along with with my work developing the software, I implemented industy standard code processes 
+    to help more people contribute to the team by creating a tasklist and creating PR procedures with unit tests and code reviews. 
+    I also created a curriculum to teach new students various aspects of robotics, from electronics to control theory to 
+    autonomous movement. I was also a part of the Curriculum Council making decisions on how to manage the 50 student team.`, 
     path: "M13 0.5C-30.5 285.5 94.5 281.5 13 470"},
   {title: "Website",  
     text: `I created this website using React. I also created a version using Hugo (very close to plain js/html/css). Right now, this 
