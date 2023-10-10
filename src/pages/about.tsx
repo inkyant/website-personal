@@ -1,9 +1,11 @@
 
-import Layout from "@components/layout";
 import React from "react";
-import type { HeadFC } from "gatsby";
+
 import * as styles from "@styles/pages/about.module.scss";
+import Layout from "@components/layout";
 import IconsBackground from "@components/home/iconsBackground";
+
+export { Head } from "@pages/index"
 
 export default function About() {
     return (
@@ -16,6 +18,3 @@ export default function About() {
         </Layout>
     )
 }
-
-
-export { Head } from "@pages/index"

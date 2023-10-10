@@ -1,12 +1,12 @@
 
+import React from 'react';
+
 import { animOptions } from "@pages";
 import * as styles from "@styles/components/home/welcome.module.scss"
 
 import { fadeinAnim, fadeAnim } from '@styles/components/home/projects.module.scss'
 
 import onVisible from "@components/common/visible";
-
-import * as React from 'react';
 
 export default function Welcome() {
 

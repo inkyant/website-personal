@@ -1,5 +1,5 @@
 
-import * as React from "react"
+import React from "react"
 
 import * as styles from '@styles/components/home/projects.module.scss'
 import { animOptions } from "@pages";

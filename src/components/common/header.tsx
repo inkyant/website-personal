@@ -1,5 +1,6 @@
 
 import React from "react"
+
 import * as styles from '@styles/components/common/header.module.scss'
 import { Link } from "gatsby-link"
 
