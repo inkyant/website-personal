@@ -46,18 +46,18 @@
 
 .end {
     height: 450px;
+    @media (max-width: 600px) {
+        height: 750px;
+    }
 }
 
 .endLinksContainer {
     font-size: 30px;
-    display: flex;
-    align-items: center;
 
-    margin-left: 400px;
-    height: 100%;
-    width: fit-content;
+    padding: 155px 0px 0px 380px;
+
     @media (max-width: 600px) {
-        margin: 300px 0px 0px 100px;
+        padding: 430px 0px 0px 100px;
     }
 }
 
