@@ -20,7 +20,7 @@ export default function End() {
 
     return (
         <section className={styles.end}>
-            <div ref={circleRef} className={`${styles.circle} ${styles.circleEnd} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
+            <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
             <div className={styles.endLinksContainer}>
                 <div className={styles.endLinks}>
                     <a href="mailto:apfurman@ucsc.edu">Email</a>
