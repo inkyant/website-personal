@@ -1,3 +1,5 @@
+
+// allow importing by doing "@components", "@styles", "@pages"
 const path = require('path')
 exports.onCreateWebpackConfig = ({ actions }) => {
     actions.setWebpackConfig({
