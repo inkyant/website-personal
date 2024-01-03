@@ -59,12 +59,12 @@
     @media (max-width: 600px) {
         padding: 430px 0px 0px 100px;
     }
-}
-
-.endLinks {
     display: flex;
     flex-direction: column;
     gap: 18px;
+}
+
+.endLink {
     z-index: 1;
 }
 
