@@ -19,6 +19,14 @@ const linePaths = [
     "M13 0.5C-30.5 285.5 94.5 281.5 13 470",
 ]
 
+// randomize array function, from stackoverflow, the Fisher-Yates algorithm
+function shuffle(array: string[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array
+}
 
 export default function Lines() {
 
@@ -32,7 +40,9 @@ export default function Lines() {
     // make line refs: one for each project, and two more for start + end
     const refs = Array(linePaths.length + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
 
-    const lines = linePaths.map((path, index) => 
+    // shuffle the lines! for fun! I didn't make them dynamic for no reason... surely...
+    // then map each path to an element that will draw the line
+    const lines = shuffle(linePaths).map((path, index) => 
         <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path}></Drawn>
     )
 
