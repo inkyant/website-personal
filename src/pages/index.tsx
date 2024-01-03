@@ -3,6 +3,8 @@ import React from "react"
 
 import type { HeadFC } from "gatsby"
 
+import { useStaticQuery, graphql } from "gatsby"
+
 import End from '@components/home/end';
 import Welcome from "@components/home/welcome";
 import Project from "@components/home/project";
@@ -53,13 +55,39 @@ export const lineAnimOptions = () => {return {
     ...animOptions(),
 }}
 
-
-
+// this is how the markdown should be formatted. 
+export const parseHtml = (html: string) => html.split('\n').map((t, i) => t.replace(/<..{0,3}>(.*)<..{0,3}>/, '$1'))
 
 export default function Home() {
 
-  const projectSections = projects.map((project, index) =>
-    <Project key={index} title={project.title} text={project.text}></Project>
+  // just typescript things...
+  // ideally there would be a way to avoid having to write the schema twice like this, but I couldn't find one...
+  const { allFile: { nodes: data } } = useStaticQuery<
+  { allFile: 
+    { nodes: [{
+      childrenMarkdownRemark: [{
+        frontmatter: {slug: string, title: string}, 
+        html: string
+      }]
+    }]
+  }}>
+  (graphql`{
+    allFile {
+      nodes {
+        childrenMarkdownRemark {
+          frontmatter {
+            slug
+            title
+          }
+          html
+        }
+      }
+    } 
+  }
+  `)
+
+  const projectSections = data.map(({childrenMarkdownRemark: [project]}, index) =>
+    <Project key={index} title={project.frontmatter.title} textHtml={project.html} slug={project.frontmatter.slug}></Project>
   )
 
   return (

@@ -2,16 +2,20 @@
 import React from "react"
 
 import * as styles from '@styles/components/home/projects.module.scss'
-import { animOptions } from "@pages";
+import { animOptions, parseHtml } from "@pages";
 import onVisible from "@components/common/visible";
+import { Link } from "gatsby";
 
-export default function Project({title, text, images}: {title: string, text: string, images?: string[]}) {
+export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images?: string[]}) {
     
     let slider;
 
     if (images) {
         // TODO: add swiper
     }
+
+    // extract short text (line #2) and long text (line #3)
+    let [ , shortText, , longText] = parseHtml(textHtml)
 
     const circleRef = React.useRef<HTMLDivElement>(null)
     const projectRef = React.useRef<HTMLDivElement>(null)
@@ -36,9 +40,16 @@ export default function Project({title, text, images}: {title: string, text: str
                 
                 {slider}
 
-                <p className={styles.projectText}>
-                    {text}
-                </p>
+                
+                <div className={styles.projectText}>
+                    <div className={styles.shortText}>
+                        <p>{shortText}</p>
+                        <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
+                    </div>
+                    <p className={styles.longText}>
+                        {longText}
+                    </p>
+                </div>
             </div>
         </div>
     </section>
