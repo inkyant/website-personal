@@ -5,7 +5,7 @@ title: "Game Development"
 
 # Short Text
 
-Created and published game modifications in  C++, lua, and SQL, garnering with over 5000 downloads.
+Created and published game modifications in  C++, lua, and SQL, garnering over 5000 downloads.
 
 # Full Text
 
