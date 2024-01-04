@@ -1,6 +1,6 @@
 ---
 slug: "rl-al"
-title: "Reinforcement Learning AI"
+title: "Reinforcement Learning"
 ---
 
 # Short Text
