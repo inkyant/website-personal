@@ -51,6 +51,24 @@
     }
 }
 
+.readMoreLink {
+    display: inline-block;
+    padding-top: 10px;
+    color: $color-secondary;
+}
+
+.longText {
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
+
+.shortText {
+    @media (min-width: 600px) {
+        display: none;
+    }
+}
+
 .endLinksContainer {
     font-size: 30px;
 
