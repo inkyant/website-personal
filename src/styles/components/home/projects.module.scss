@@ -40,12 +40,12 @@
     height: 26px;
     width: 26px;
     position: absolute;
-    left: 37px;
+    left: $circleSpacingWidescreen;
     @media (max-width: 600px) {
-        left: 37px;
+        left: $circleSpacingNarrowscreen;
     }
     scale: 0;
-    margin: auto;
+    margin-top: -5px;
     background-color: $color-accent;
     border-radius: 50%;
 }
@@ -66,7 +66,7 @@
 .endLinksContainer {
     font-size: 30px;
 
-    padding: 155px 0px 0px 380px;
+    padding: 155px 0px 0px 420px;
 
     @media (max-width: 600px) {
         padding: 430px 0px 0px 100px;

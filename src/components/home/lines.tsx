@@ -7,6 +7,8 @@ import onVisible from "@components/common/visible";
 
 import { fadeinAnim } from '@styles/components/home/projects.module.scss'
 import { STROKE_WIDTH } from "@components/defines";
+import { CIRCLE_LEFT_PX_NARROWSCREEN, CIRCLE_LEFT_PX_WIDESCREEN } from "@components/defines";
+
 
 const ANGLE = Math.PI / 4
 const RADIUS = 20 // radius, ie length, of the arrow at the end
@@ -39,13 +41,17 @@ export default function Lines() {
     const arrowRef = React.useRef<SVGSVGElement>(null)
 
     let isArrowPointDown = screenWidth < 600
+    let circleLeftPx = screenWidth < 600 ? CIRCLE_LEFT_PX_NARROWSCREEN : CIRCLE_LEFT_PX_WIDESCREEN
 
     // make line refs: one for each project, and two more for start + end
     const refs = Array(linePaths.length + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
 
     // map each path to an element that will draw the line
-    const lines = linePaths.map((path, index) => 
-        <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path}></Drawn>
+    const lines = linePaths.map((path, index) => {
+        if (index == 0)
+            return  <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path} index={1}></Drawn>
+        return <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path}></Drawn>
+    }
     )
 
     // set up animation for first line and last line
@@ -96,11 +102,12 @@ export default function Lines() {
         })
     }
 
-    const [xPos, yPos] = isArrowPointDown ? [100, 400] : [300, 225]
+    // x position aligns with the .endLinksContainer in projects.scss
+    const [xPos, yPos] = isArrowPointDown ? [100 + 40 - circleLeftPx, 400] : [420 - 30 - circleLeftPx, 225]
 
     return (
-        <div style={{position: 'absolute', left: '37px', width: "60%"}}>
-            <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 37) + " 0 C " + (screenWidth/2 - 37) + " 300 50 50 13 250"}></Drawn>
+        <div style={{position: 'absolute', left: circleLeftPx + 'px', width: "60%"}}>
+            <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - circleLeftPx) + " 0 C " + (screenWidth/2 - circleLeftPx) + " 300 50 50 13 250"}></Drawn>
             {lines}
             <svg ref={arrowRef} className={animating ? fadeinAnim : ''} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d={
