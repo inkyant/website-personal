@@ -6,7 +6,10 @@
 }
 
 .project-content {
-    margin: 0 10px 0 100px;
+    margin: 0 270px 0 270px;
+    @media (max-width: 600px) {
+        margin: 0 10px 0 100px;
+    }
     opacity: 0;
 }
 
