@@ -61,14 +61,19 @@ export default function Lines() {
             // if scroll to top, IntersectionObserver does not always catch, so undraw all
             if (scrollArea?.scrollTop === 0) {drawingCallback(-1)}
 
-            // last line has special animation when reacted the bottom
+            // last line has special animation when reached the bottom
             let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
+            
             if (isCloseToBottom(200)) {
-                let close = isCloseToBottom(1)
+                let close = isCloseToBottom(5)
                 if (close != null) {
+                    
+                    // if we're near the bottom, set the line undrawn, unless at the bottom
                     refs[refs.length-1].current?.animDrawn(close)
+
+                    // draw in arrow after a timeout (cant detect when css animation finishes so just manually time)
                     setTimeout(() => {
-                        let nowClose = isCloseToBottom(1)
+                        let nowClose = isCloseToBottom(5)
                         nowClose != null && setAnimating(nowClose)
                     }, (close && !isArrowPointDown) ? 750 : 0)
                 }
@@ -96,7 +101,7 @@ export default function Lines() {
         <div style={{position: 'absolute', left: '37px', width: "60%"}}>
             <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 37) + " 0 C " + (screenWidth/2 - 37) + " 300 50 50 13 250"}></Drawn>
             {lines}
-            <svg ref={arrowRef} className={animating ? fadeinAnim : fadeAnim} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg ref={arrowRef} className={animating ? fadeinAnim : ''} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d={"M "+(xPos+1)+" "+(yPos+1)+" L "+(xPos - xArrow)+" "+(yPos - yArrow)+" M "+xPos+" "+yPos+" L "+(xPos + (xArrow*(isArrowPointDown ? 1 : -1)))+" "+(yPos + (yArrow*(isArrowPointDown ? -1 : 1)))} stroke="white" strokeWidth="3"/>
             </svg>
             <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isArrowPointDown ? 0 : 100))+" "+(yPos-(isArrowPointDown ? 200 : 0))+" "+xPos+" "+yPos}></Drawn>
