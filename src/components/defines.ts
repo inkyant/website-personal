@@ -1,2 +1,2 @@
 
-export let STROKE_WIDTH = 3
+export let STROKE_WIDTH = 5
