@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { drawAnim } from '@styles/components/home/projects.module.scss'
 import { lineAnimOptions } from "@pages";
 import onVisible from "@components/common/visible";
+import { STROKE_WIDTH } from "@components/defines";
 
 // typescript fun
 export type DrawingHandle = {
@@ -49,7 +50,7 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     return (
         <>
             <svg style={{display: "block"}} ref={drawnRef} height={height} width={width} fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path ref={inputRef} className={isEndAnim ? drawAnim : ''} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent}} d={path} stroke="white" strokeWidth="3"/>
+                <path ref={inputRef} className={isEndAnim ? drawAnim : ''} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent}} d={path} stroke="white" strokeWidth={STROKE_WIDTH}/>
             </svg>
         </>
     );

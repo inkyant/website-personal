@@ -5,7 +5,8 @@ import Drawn from "@components/home/drawn";
 import { DrawingHandle } from "./drawn";
 import onVisible from "@components/common/visible";
 
-import { fadeinAnim, fadeAnim } from '@styles/components/home/projects.module.scss'
+import { fadeinAnim } from '@styles/components/home/projects.module.scss'
+import { STROKE_WIDTH } from "@components/defines";
 
 const ANGLE = Math.PI / 4
 const RADIUS = 20 // radius, ie length, of the arrow at the end
@@ -102,7 +103,17 @@ export default function Lines() {
             <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - 37) + " 0 C " + (screenWidth/2 - 37) + " 300 50 50 13 250"}></Drawn>
             {lines}
             <svg ref={arrowRef} className={animating ? fadeinAnim : ''} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d={"M "+(xPos+1)+" "+(yPos+1)+" L "+(xPos - xArrow)+" "+(yPos - yArrow)+" M "+xPos+" "+yPos+" L "+(xPos + (xArrow*(isArrowPointDown ? 1 : -1)))+" "+(yPos + (yArrow*(isArrowPointDown ? -1 : 1)))} stroke="white" strokeWidth="3"/>
+                <path d={
+                    // manually draw arrow based on if pointing up or down with two lines
+                    // move to x, y position, but to account for stroke width need to move line slightly along angle
+                    "M "+(xPos+ (STROKE_WIDTH/2)*Math.cos(ANGLE))+" "+(yPos+(STROKE_WIDTH/2)*Math.sin(ANGLE))+
+                    //create a line, up and to the left
+                    " L "+(xPos - xArrow)+" "+(yPos - yArrow)+
+                    // move back to position of arrow tip
+                   " M "+xPos+" "+yPos+
+                    // make second line, if this arrow is pointing right then line goes down and left. otherwise up and right.
+                   " L "+(xPos + (xArrow*(isArrowPointDown ? 1 : -1)))+" "+(yPos + (yArrow*(isArrowPointDown ? -1 : 1)))} 
+                   stroke="white" strokeWidth={STROKE_WIDTH}/>
             </svg>
             <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isArrowPointDown ? 0 : 100))+" "+(yPos-(isArrowPointDown ? 200 : 0))+" "+xPos+" "+yPos}></Drawn>
         </div>
