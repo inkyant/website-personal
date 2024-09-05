@@ -5,7 +5,7 @@ title: "Robotics"
 
 # Short Text
 
-Led software on #8 alliance FRC team in the world, implementing autonomous movement, swerve drive, and managing the team.
+Led software on my robotics team, implementing autonomous movement, swerve drive, and managing the team; this brought us to **#8 in the world**.
 
 # Full Text
 

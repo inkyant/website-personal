@@ -5,7 +5,7 @@ title: "Reinforcement Learning"
 
 # Short Text
 
-Created a Deep Q Reinforcement Learning algorithm using pytorch to beat the game Super Auto Pets.
+Created a Deep Q Reinforcement Learning algorithm using **pytorch** to beat the game Super Auto Pets.
 
 # Full Text
 
