@@ -30,7 +30,17 @@ export const lineAnimOptions = () => {return {
 }}
 
 // this is how the markdown should be formatted. 
-export const parseHtml = (html: string) => html.split('\n').map((t, i) => t.replace(/<..{0,3}>(.*)<..{0,3}>/, '$1'))
+export const parseHtml = (html: string) => {
+
+  // split by each element, i.e. by line
+  return html.split('\n').map((t, i) => t
+    // remove beginning and ending <p> or <h1> tag
+    .replace(/<..{0,3}>(.*)<..{0,3}>/, '$1')
+    // replace <strong> with colored text
+    .replace(/<strong>/g, '<span className={styles.coloredText}>')
+    .replace(/<\/strong>/g, "</span>")
+  )
+}
 
 export default function Home() {
 
