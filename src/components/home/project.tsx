@@ -42,10 +42,8 @@ export default function Project({title, textHtml, slug, images}: {title: string,
 
                 
                 <div className={styles.projectText}>
-                    <div>
-                        <p>{shortText}</p>
-                        <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
-                    </div>
+                    <p dangerouslySetInnerHTML={{ __html: shortText }}/>
+                    <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
                 </div>
             </div>
         </div>

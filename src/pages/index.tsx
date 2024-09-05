@@ -36,8 +36,8 @@ export const parseHtml = (html: string) => {
   return html.split('\n').map((t, i) => t
     // remove beginning and ending <p> or <h1> tag
     .replace(/<..{0,3}>(.*)<..{0,3}>/, '$1')
-    // replace <strong> with colored text
-    .replace(/<strong>/g, '<span className={styles.coloredText}>')
+    // replace <strong> with colored text. Have to hard code color set in variables.scss
+    .replace(/<strong>/g, '<span style="color: #11da86">')
     .replace(/<\/strong>/g, "</span>")
   )
 }
