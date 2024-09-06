@@ -5,3 +5,9 @@ $color-background: #313143;
 $color-primary: #63bdff;
 $color-secondary: #747070;
 $color-accent: #11da86;
+// have to hard code $color-accent for project bold text processing
+
+/* Line params */
+// for next two, also update defines.ts
+$circleSpacingWidescreen: 150px;
+$circleSpacingNarrowscreen: 37px;
