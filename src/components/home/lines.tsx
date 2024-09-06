@@ -42,15 +42,17 @@ export default function Lines() {
 
     let isArrowPointDown = screenWidth < 600
     let circleLeftPx = screenWidth < 600 ? CIRCLE_LEFT_PX_NARROWSCREEN : CIRCLE_LEFT_PX_WIDESCREEN
+    
+    // these are props all the Drawn components use
+    let drawnProps = {width: 2 * screenWidth / 3, leftOffset: circleLeftPx}
 
     // make line refs: one for each project, and two more for start + end
     const refs = Array(linePaths.length + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
 
     // map each path to an element that will draw the line
     const lines = linePaths.map((path, index) => {
-        return <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path}></Drawn>
-    }
-    )
+        return <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" path={path} {...drawnProps}></Drawn>
+    })
 
     // set up animation for first line and last line
     React.useEffect(() => {
@@ -104,10 +106,12 @@ export default function Lines() {
     const [xPos, yPos] = isArrowPointDown ? [100 + 40 - circleLeftPx, 400] : [420 - 30 - circleLeftPx, 225]
 
     return (
-        <div style={{position: 'absolute', left: circleLeftPx + 'px', width: "60%"}}>
-            <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} width="100%" path={"M " + (screenWidth/2 - circleLeftPx) + " 0 C " + (screenWidth/2 - circleLeftPx) + " 300 50 50 13 250"}></Drawn>
+        <div style={{position: 'absolute', width: "60%"}}>
+            <Drawn ref={refs[0]} drawingCallback={() => drawingCallback(0)} height={250} path={"M " + (screenWidth/2 - circleLeftPx) + " 0 C " + (screenWidth/2 - circleLeftPx) + " 300 50 50 13 250"} {...drawnProps}></Drawn>
+            
             {lines}
-            <svg ref={arrowRef} className={animating ? fadeinAnim : ''} style={{position: "absolute", opacity: animating ? 1 : 0}} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            
+            <svg style={{position: "absolute", left: circleLeftPx, opacity: animating ? 1 : 0}} ref={arrowRef} className={animating ? fadeinAnim : ''} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d={
                     // manually draw arrow based on if pointing up or down with two lines
                     // move to x, y position, but to account for stroke width need to move line slightly along angle
@@ -120,7 +124,7 @@ export default function Lines() {
                    " L "+(xPos + (xArrow*(isArrowPointDown ? 1 : -1)))+" "+(yPos + (yArrow*(isArrowPointDown ? -1 : 1)))} 
                    stroke="white" strokeWidth={STROKE_WIDTH}/>
             </svg>
-            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} width="100%" path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isArrowPointDown ? 0 : 100))+" "+(yPos-(isArrowPointDown ? 200 : 0))+" "+xPos+" "+yPos}></Drawn>
+            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isArrowPointDown ? 0 : 100))+" "+(yPos-(isArrowPointDown ? 200 : 0))+" "+xPos+" "+yPos}  {...drawnProps}></Drawn>
         </div>
     )
 }
