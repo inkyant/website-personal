@@ -1,5 +1,5 @@
 
-export let STROKE_WIDTH = 5
+export let STROKE_WIDTH = 4
 
 // for these two, also update variables.scss
 export let CIRCLE_LEFT_PX_WIDESCREEN = 150
