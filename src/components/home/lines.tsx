@@ -48,8 +48,6 @@ export default function Lines() {
 
     // map each path to an element that will draw the line
     const lines = linePaths.map((path, index) => {
-        if (index == 0)
-            return  <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path} index={1}></Drawn>
         return <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" width="150" path={path}></Drawn>
     }
     )
