@@ -50,9 +50,9 @@ export default function Lines() {
     const refs = Array(linePaths.length + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
 
     // map each path to an element that will draw the line
-    const lines = linePaths.map((path, index) => {
-        return <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" path={path} {...drawnProps}></Drawn>
-    })
+    const lines = linePaths.map((path, index) => 
+        <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" path={path} {...drawnProps}></Drawn>
+    )
 
     // set up animation for first line and last line
     React.useEffect(() => {
