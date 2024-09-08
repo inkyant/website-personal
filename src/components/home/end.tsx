@@ -2,7 +2,7 @@
 import React from "react"
 
 import * as styles from "@styles/components/home/projects.module.scss";
-import { animOptions } from "@pages";
+import { animOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 
 export default function End() {

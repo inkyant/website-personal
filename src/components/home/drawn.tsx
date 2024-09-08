@@ -2,9 +2,9 @@
 import React, { useRef } from "react";
 
 import { drawAnim } from '@styles/components/home/projects.module.scss'
-import { lineAnimOptions } from "@pages";
 import onVisible from "@components/common/visible";
 import { STROKE_WIDTH } from "@components/defines";
+import { lineAnimOptions } from "@components/defines";
 
 // typescript fun
 export type DrawingHandle = {

@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { animOptions } from "@pages";
+import { animOptions } from "@components/defines";
 import * as styles from "@styles/components/home/welcome.module.scss"
 
 import { fadeinAnim, fadeAnim } from '@styles/components/home/projects.module.scss'
