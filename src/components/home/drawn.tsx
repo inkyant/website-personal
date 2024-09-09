@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { drawAnim } from '@styles/components/home/projects.module.scss'
 import onVisible from "@components/common/visible";
 import { STROKE_WIDTH } from "@components/defines";
-import { lineAnimOptions } from "@components/defines";
+import { ANIM_MARGIN_TOP, lineAnimOptions } from "@components/defines";
 
 // typescript fun
 export type DrawingHandle = {
@@ -21,8 +21,8 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
 
     React.useEffect(() => {
         let draw = (entry: IntersectionObserverEntry) => {
-            // if the line is visible, draw it! Must be below the screen or will animate as it leaves at the top of screen
-            if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
+            // if the line is visible, draw it! Must be in the animation margin or will animate as it leaves at the margin
+            if (entry.isIntersecting && entry.boundingClientRect.y > -ANIM_MARGIN_TOP) {
                 setDrawnPercent(entry.intersectionRatio)
                 if (drawingCallback) drawingCallback(entry.intersectionRatio)
             }
