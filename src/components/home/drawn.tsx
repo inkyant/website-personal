@@ -24,7 +24,7 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
             // if the line is visible, draw it! Must be below the screen or will animate as it leaves at the top of screen
             if (entry.isIntersecting && entry.boundingClientRect.y > 0) {
                 setDrawnPercent(entry.intersectionRatio)
-                if (drawingCallback) drawingCallback()
+                if (drawingCallback) drawingCallback(entry.intersectionRatio)
             }
         }
 
