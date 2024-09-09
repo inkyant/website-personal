@@ -41,8 +41,8 @@ export default function Lines() {
     const [animating, setAnimating] = React.useState(false)
     const arrowRef = React.useRef<SVGSVGElement>(null)
 
-    let isMoblie = screenWidth < 600
-    let circleLeftPx = isMoblie ? CIRCLE_LEFT_PX_NARROWSCREEN : CIRCLE_LEFT_PX_WIDESCREEN
+    let isMobile = screenWidth < 600
+    let circleLeftPx = isMobile ? CIRCLE_LEFT_PX_NARROWSCREEN : CIRCLE_LEFT_PX_WIDESCREEN
     
     // these are props all the Drawn components use
     let drawnProps = {width: 2 * screenWidth / 3, leftOffset: circleLeftPx}
@@ -104,7 +104,7 @@ export default function Lines() {
     }
 
     // x position aligns with the .endLinksContainer in projects.scss
-    const [xPos, yPos] = isMoblie ? [100 + 40 - circleLeftPx, 400] : [420 - 30 - circleLeftPx, 225]
+    const [xPos, yPos] = isMobile ? [100 + 40 - circleLeftPx, 400] : [420 - 30 - circleLeftPx, 225]
 
     return (
         <div style={{position: 'absolute', width: "60%"}}>
@@ -122,10 +122,10 @@ export default function Lines() {
                     // move back to position of arrow tip
                    " M "+xPos+" "+yPos+
                     // make second line, if this arrow is pointing right then line goes down and left. otherwise up and right.
-                   " L "+(xPos + (xArrow*(isMoblie ? 1 : -1)))+" "+(yPos + (yArrow*(isMoblie ? -1 : 1)))} 
+                   " L "+(xPos + (xArrow*(isMobile ? 1 : -1)))+" "+(yPos + (yArrow*(isMobile ? -1 : 1)))} 
                    stroke="white" strokeWidth={STROKE_WIDTH}/>
             </svg>
-            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isMoblie ? 0 : 100))+" "+(yPos-(isMoblie ? 200 : 0))+" "+xPos+" "+yPos}  {...drawnProps}></Drawn>
+            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isMobile ? 0 : 100))+" "+(yPos-(isMobile ? 200 : 0))+" "+xPos+" "+yPos}  {...drawnProps}></Drawn>
         </div>
     )
 }
