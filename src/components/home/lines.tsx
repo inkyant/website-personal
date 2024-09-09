@@ -73,17 +73,17 @@ export default function Lines() {
             let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
             
             if (isCloseToBottom(200)) {
-                let close = isCloseToBottom(5)
-                if (close != null) {
+                let atBottom = isCloseToBottom(5)
+                if (atBottom != null) {
                     
-                    // if we're near the bottom, set the line undrawn, unless at the bottom
-                    refs[refs.length-1].current?.animDrawn(close)
+                    // unset the line animation, unless at the bottom, then start it
+                    refs[refs.length-1].current?.animDrawn(atBottom)
 
                     // draw in arrow after a timeout (cant detect when css animation finishes so just manually time)
                     setTimeout(() => {
                         let nowClose = isCloseToBottom(5)
-                        nowClose != null && setAnimating(nowClose)
-                    }, (close && !isMoblie) ? 750 : 0)
+                        if (nowClose != null) setAnimating(nowClose)
+                    }, atBottom ? 750 : 0)
                 }
             }
         }
