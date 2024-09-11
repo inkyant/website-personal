@@ -111,7 +111,11 @@ export default function Lines() {
 
     const finalLineCallback = (percent: number) => {
         drawingCallback(refs.length-1)
-        if ((document.querySelector("#scrollArea")?.scrollWidth || 600) < 600) setAnimating(percent > 0.98)
+        let scrollArea = document.querySelector("#scrollArea")
+        if (scrollArea && scrollArea.scrollWidth < 600) {
+            let isCloseToBottom = Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < 5
+            setAnimating(percent > 0.98 || isCloseToBottom)
+        }
     }
 
     return (
