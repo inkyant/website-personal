@@ -6,11 +6,11 @@
 }
 
 .project-content {
+    opacity: 0;
     margin: 0 270px 0 270px;
     @media (max-width: 600px) {
         margin: 0 10px 0 100px;
     }
-    opacity: 0;
 }
 
 .project-title {
@@ -40,14 +40,14 @@
     height: 26px;
     width: 26px;
     position: absolute;
-    left: $circleSpacingWidescreen;
-    @media (max-width: 600px) {
-        left: $circleSpacingNarrowscreen;
-    }
     scale: 0;
     margin-top: -5px;
     background-color: $color-accent;
     border-radius: 50%;
+    left: $circleSpacingWidescreen;
+    @media (max-width: 600px) {
+        left: $circleSpacingNarrowscreen;
+    }
 }
 
 .end {
@@ -65,15 +65,14 @@
 
 .endLinksContainer {
     font-size: 30px;
-
-    padding: 155px 0px 0px 420px;
-
-    @media (max-width: 600px) {
-        padding: 430px 0px 0px 100px;
-    }
     display: flex;
     flex-direction: column;
     gap: 18px;
+
+    padding: 155px 0px 0px 420px;
+    @media (max-width: 600px) {
+        padding: 430px 0px 0px 100px;
+    }
 }
 
 .endLink {
@@ -91,7 +90,6 @@
         100% { stroke-dashoffset: 0; }    
     }
 
-    
     // circle animation
 
     .growAnim {
@@ -134,5 +132,4 @@
         0%   { opacity: 1; }
         100% { opacity: 0; }
     }
-
 }
