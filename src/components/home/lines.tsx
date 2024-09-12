@@ -37,11 +37,11 @@ export default function Lines() {
 
     const [screenWidth, setScreenWidth] = React.useState(600) //window.innerWidth doesn't always work
     
+    // animation used for final line, it smoothly draws itself without scrolling
     const [animating, setAnimating] = React.useState(false)
-    const arrowRef = React.useRef<SVGSVGElement>(null)
 
-    let isArrowPointDown = screenWidth < 600
-    let circleLeftPx = screenWidth < 600 ? CIRCLE_LEFT_PX_NARROWSCREEN : CIRCLE_LEFT_PX_WIDESCREEN
+    let isMobile = screenWidth < 600
+    let circleLeftPx = isMobile ? CIRCLE_LEFT_PX_NARROWSCREEN : CIRCLE_LEFT_PX_WIDESCREEN
     
     // these are props all the Drawn components use
     let drawnProps = {width: 2 * screenWidth / 3, leftOffset: circleLeftPx}
@@ -68,21 +68,25 @@ export default function Lines() {
             // if scroll to top, IntersectionObserver does not always catch, so undraw all
             if (scrollArea?.scrollTop === 0) {drawingCallback(-1)}
 
-            // last line has special animation when reached the bottom
-            let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
-            
-            if (isCloseToBottom(200)) {
-                let close = isCloseToBottom(5)
-                if (close != null) {
-                    
-                    // if we're near the bottom, set the line undrawn, unless at the bottom
-                    refs[refs.length-1].current?.animDrawn(close)
+            // for mobile, last line has no special animation
+            // dont use screenWidth, state is not updated at this point (could make ref to store)
+            if ((scrollArea?.scrollWidth || 600) >= 600) {
+                // last line has special animation when reached the bottom
+                let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
+                
+                if (isCloseToBottom(200)) {
+                    let atBottom = isCloseToBottom(5)
+                    if (atBottom != null) {
+                        
+                        // unset the line animation, unless at the bottom, then start it
+                        refs[refs.length-1].current?.animDrawn(atBottom)
 
-                    // draw in arrow after a timeout (cant detect when css animation finishes so just manually time)
-                    setTimeout(() => {
-                        let nowClose = isCloseToBottom(5)
-                        nowClose != null && setAnimating(nowClose)
-                    }, (close && !isArrowPointDown) ? 750 : 0)
+                        // draw in arrow after a timeout (cant detect when css animation finishes so just manually time)
+                        setTimeout(() => {
+                            let nowClose = isCloseToBottom(5)
+                            if (nowClose != null) setAnimating(nowClose)
+                        }, atBottom ? 750 : 0)
+                    }
                 }
             }
         }
@@ -103,7 +107,16 @@ export default function Lines() {
     }
 
     // x position aligns with the .endLinksContainer in projects.scss
-    const [xPos, yPos] = isArrowPointDown ? [100 + 40 - circleLeftPx, 400] : [420 - 30 - circleLeftPx, 225]
+    const [xPos, yPos] = isMobile ? [100 + 40 - circleLeftPx, 400] : [420 - 30 - circleLeftPx, 225]
+
+    const finalLineCallback = (percent: number) => {
+        drawingCallback(refs.length-1)
+        let scrollArea = document.querySelector("#scrollArea")
+        if (scrollArea && scrollArea.scrollWidth < 600) {
+            let isCloseToBottom = Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < 5
+            setAnimating(percent > 0.98 || isCloseToBottom)
+        }
+    }
 
     return (
         <div style={{position: 'absolute', width: "60%"}}>
@@ -111,7 +124,7 @@ export default function Lines() {
             
             {lines}
             
-            <svg style={{position: "absolute", left: circleLeftPx, opacity: animating ? 1 : 0}} ref={arrowRef} className={animating ? fadeinAnim : ''} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg style={{position: "absolute", left: circleLeftPx, opacity: animating ? 1 : 0}} className={animating ? fadeinAnim : ''} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d={
                     // manually draw arrow based on if pointing up or down with two lines
                     // move to x, y position, but to account for stroke width need to move line slightly along angle
@@ -121,10 +134,10 @@ export default function Lines() {
                     // move back to position of arrow tip
                    " M "+xPos+" "+yPos+
                     // make second line, if this arrow is pointing right then line goes down and left. otherwise up and right.
-                   " L "+(xPos + (xArrow*(isArrowPointDown ? 1 : -1)))+" "+(yPos + (yArrow*(isArrowPointDown ? -1 : 1)))} 
+                   " L "+(xPos + (xArrow*(isMobile ? 1 : -1)))+" "+(yPos + (yArrow*(isMobile ? -1 : 1)))} 
                    stroke="white" strokeWidth={STROKE_WIDTH}/>
             </svg>
-            <Drawn ref={refs[refs.length-1]} drawingCallback={() => drawingCallback(refs.length-1)} height={483} path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isArrowPointDown ? 0 : 100))+" "+(yPos-(isArrowPointDown ? 200 : 0))+" "+xPos+" "+yPos}  {...drawnProps}></Drawn>
+            <Drawn ref={refs[refs.length-1]} drawingCallback={finalLineCallback} height={483} path={"M 13 6 C 2 98 63 128 86 154.5 C 116 184 94 288 48 229 C 13 154 "+(xPos-(isMobile ? 0 : 100))+" "+(yPos-(isMobile ? 200 : 0))+" "+xPos+" "+yPos}  {...drawnProps}></Drawn>
         </div>
     )
 }

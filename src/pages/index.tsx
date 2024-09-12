@@ -12,27 +12,6 @@ import Layout from "@components/layout";
 import Lines from "@components/home/lines";
 import IconsBackground from "@components/home/iconsBackground";
 
-// configure the settings for animation
-// precision is the % step at which we animate, for example 0.01 draws 1% of the line for every 1% scrolled
-const PRECISION = 0.01
-// the percentage of screen height above the bottom of the viewport at which the line is "drawn" (just for the percent intersection, the line can go up)
-export const ANIM_MARGIN_RATIO = 1/3
-// options is used by IntersectionObserver, see the docs. We configure it to callback every precision% and 
-// only call back at ANIM_MARGIN_RATIO*screenheight px above the bottom of the viewport
-export const animOptions = () => {
-  let scrollArea = document.querySelector("#scrollArea")
-  let height = scrollArea ? scrollArea.clientHeight : 900
-  return {
-    rootMargin: "500px 0px -" + height*ANIM_MARGIN_RATIO + "px 0px",
-    root: scrollArea,
-  }
-}
-
-export const lineAnimOptions = () => {return {
-    threshold: Array.from({length: (1 / PRECISION) + 1}, (value, index) => index*PRECISION),
-    ...animOptions(),
-}}
-
 // this is how the markdown should be formatted. 
 export const parseHtml = (html: string) => {
 

@@ -4,7 +4,7 @@ export default function onVisible(elements: (Element | null)[], options: object,
     if (!elements) return
 
     let intersectionCallback: IntersectionObserverCallback = (entries, observer) => {
-        entries.forEach((entry) => { callback(entry) });
+        entries.forEach((entry) => callback(entry));
     }
     let observer = new IntersectionObserver(intersectionCallback, options);
     

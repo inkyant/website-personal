@@ -2,7 +2,8 @@
 import React from "react"
 
 import * as styles from '@styles/components/home/projects.module.scss'
-import { animOptions, parseHtml } from "@pages";
+import { parseHtml } from "@pages";
+import { animOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 import { Link } from "gatsby";
 
