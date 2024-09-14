@@ -7,6 +7,7 @@ interface MarkdownData {
     frontmatter: {
         slug: string
         title: string
+        priority: number
     }
     fileAbsolutePath: string
     html: string

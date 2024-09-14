@@ -1,6 +1,7 @@
 ---
 slug: "rl-al"
 title: "Reinforcement Learning"
+priority: 1
 ---
 
 # Short Text

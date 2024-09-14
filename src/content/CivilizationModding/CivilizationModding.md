@@ -1,6 +1,7 @@
 ---
 slug: "game-dev"
 title: "Game Development"
+priority: 5
 ---
 
 # Short Text

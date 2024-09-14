@@ -41,6 +41,7 @@ export default function Home() {
             frontmatter {
               slug
               title
+              priority
             }
             html
             fileAbsolutePath
@@ -84,9 +85,10 @@ export default function Home() {
     }
   })
 
-  const projectSections = Object.keys(folderContents).map(folderName => {
+  const sortedProjectNames = Object.keys(folderContents).sort((a, b) => folderContents[a].markdown.frontmatter.priority - folderContents[b].markdown.frontmatter.priority);
+
+  const projectSections = sortedProjectNames.map(folderName => {
     const { markdown, images } = folderContents[folderName]
-    console.log(markdown, images)
     return <Project key={folderName} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
   })
 
