@@ -6,12 +6,13 @@ import { parseHtml } from "@pages";
 import { animOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 import { Link } from "gatsby";
+import { ImageData } from "graphql-types";
 
-export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images?: string[]}) {
+export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: ImageData[]}) {
     
     let slider;
 
-    if (images) {
+    if (images.length > 0) {
         // TODO: add swiper
     }
 
@@ -40,7 +41,6 @@ export default function Project({title, textHtml, slug, images}: {title: string,
                 <h3 className={styles.projectTitle}>{title}</h3>
                 
                 {slider}
-
                 
                 <div className={styles.projectText}>
                     <p dangerouslySetInnerHTML={{ __html: shortText }}/>

@@ -11,6 +11,7 @@ import Project from "@components/home/project";
 import Layout from "@components/layout";
 import Lines from "@components/home/lines";
 import IconsBackground from "@components/home/iconsBackground";
+import { ImageData, MarkdownData, QueryData } from "graphql-types";
 
 // this is how the markdown should be formatted. 
 export const parseHtml = (html: string) => {
@@ -25,37 +26,69 @@ export const parseHtml = (html: string) => {
   )
 }
 
+interface FolderContent {
+  markdown: MarkdownData
+  images: ImageData[]
+}
+
 export default function Home() {
 
-  // just typescript things...
-  // ideally there would be a way to avoid having to write the schema twice like this, but I couldn't find one...
-  const { allFile: { nodes: data } } = useStaticQuery<
-  { allFile: 
-    { nodes: [{
-      childrenMarkdownRemark: [{
-        frontmatter: {slug: string, title: string}, 
-        html: string
-      }]
-    }]
-  }}>
-  (graphql`{
-    allFile {
-      nodes {
-        childrenMarkdownRemark {
-          frontmatter {
-            slug
-            title
+  const data = useStaticQuery<QueryData>(graphql`
+    query {
+      markdowns: allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              slug
+              title
+            }
+            html
+            fileAbsolutePath
           }
-          html
         }
       }
-    } 
-  }
+      images: allFile(filter: { extension: { in: ["png", "jpg", "jpeg", "gif"] } }) {
+        edges {
+          node {
+            relativePath
+            publicURL
+            absolutePath
+          }
+        }
+      }
+    }
   `)
 
-  const projectSections = data.map(({childrenMarkdownRemark: [project]}, index) =>
-    <Project key={index} title={project.frontmatter.title} textHtml={project.html} slug={project.frontmatter.slug}></Project>
-  )
+  // Helper function to extract the folder name from the file path
+  const getFolderName = (path: string): string => {
+    const parts = path.split('/')
+    return parts[parts.length - 2]
+  }
+
+  // Process the data
+  const markdownFiles = data.markdowns.edges.map(edge => edge.node)
+  const imageFiles = data.images.edges
+
+  // Group images and markdown by folder
+  const folderContents: { [key: string]: FolderContent } = {}
+
+  markdownFiles.forEach(markdown => {
+    const folderName = getFolderName(markdown.fileAbsolutePath)
+    folderContents[folderName] = { markdown: markdown, images: [] }
+  })
+
+  imageFiles.forEach(({ node }) => {
+    const folderName = getFolderName(node.absolutePath)
+    if (folderContents[folderName]) {
+      folderContents[folderName].images.push(node)
+    }
+  })
+
+  const projectSections = Object.keys(folderContents).map(folderName => {
+    const { markdown, images } = folderContents[folderName]
+    console.log(markdown, images)
+    return <Project key={folderName} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
+  })
 
   return (
     <Layout>
