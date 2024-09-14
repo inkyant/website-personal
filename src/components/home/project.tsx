@@ -7,14 +7,11 @@ import { animOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 import { Link } from "gatsby";
 import { ImagePath } from "graphql-types";
+import Slider from "@components/common/slider";
 
 export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: ImagePath[]}) {
     
-    let slider;
-
-    if (images.length > 0) {
-        // TODO: add swiper
-    }
+    const slider = <Slider images={images} />
 
     // extract short text (line #2) and long text (line #3)
     let [ , shortText, , longText] = parseHtml(textHtml)
@@ -37,12 +34,10 @@ export default function Project({title, textHtml, slug, images}: {title: string,
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
 
             <div className={`${styles.projectContent} ${animating ? styles.fadeinAnim : styles.fadeAnim}`}>
-
-                <h3 className={styles.projectTitle}>{title}</h3>
-                
                 {slider}
                 
                 <div className={styles.projectText}>
+                    <h3 className={styles.projectTitle}>{title}</h3>
                     <p dangerouslySetInnerHTML={{ __html: shortText }}/>
                     <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
                 </div>
