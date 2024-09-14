@@ -19,7 +19,7 @@ interface MarkdownQueryData {
 }
 
 // Define types for Image data
-interface ImageData {
+interface ImagePath {
     relativePath: string
     publicURL: string
     absolutePath: string
@@ -27,7 +27,7 @@ interface ImageData {
 
 interface ImageQueryData {
   images: {
-    edges: { node: ImageData }[]
+    edges: { node: ImagePath }[]
   }
 }
 

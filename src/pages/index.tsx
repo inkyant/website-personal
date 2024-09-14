@@ -11,7 +11,7 @@ import Project from "@components/home/project";
 import Layout from "@components/layout";
 import Lines from "@components/home/lines";
 import IconsBackground from "@components/home/iconsBackground";
-import { ImageData, MarkdownData, QueryData } from "graphql-types";
+import { ImagePath, MarkdownData, QueryData } from "graphql-types";
 
 // this is how the markdown should be formatted. 
 export const parseHtml = (html: string) => {
@@ -28,7 +28,7 @@ export const parseHtml = (html: string) => {
 
 interface FolderContent {
   markdown: MarkdownData
-  images: ImageData[]
+  images: ImagePath[]
 }
 
 export default function Home() {
