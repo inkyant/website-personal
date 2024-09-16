@@ -41,7 +41,6 @@ export default function Home() {
             frontmatter {
               slug
               title
-              priority
             }
             html
             fileAbsolutePath
@@ -55,6 +54,11 @@ export default function Home() {
             publicURL
             absolutePath
           }
+        }
+      }
+      yaml: allLayoutYaml {
+        nodes {
+          folder
         }
       }
     }
@@ -85,20 +89,22 @@ export default function Home() {
     }
   })
 
-  const sortedProjectNames = Object.keys(folderContents).sort((a, b) => folderContents[a].markdown.frontmatter.priority - folderContents[b].markdown.frontmatter.priority);
-
-  const projectSections = sortedProjectNames.map(folderName => {
-    const { markdown, images } = folderContents[folderName]
-    return <Project key={folderName} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
+  const projectSections = data.yaml.nodes.map(({ folder }) => {
+    if (!folderContents[folder]) {
+      console.error("Unable to find folder " + folder + " specfied in yaml.")
+      return <></>
+    }
+    const { markdown, images } = folderContents[folder]
+    return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
   })
 
   return (
     <Layout>
-      <IconsBackground/>
+      <IconsBackground />
       <Welcome></Welcome>
 
       <div>
-        <Lines></Lines>
+        <Lines count={data.yaml.nodes.length}></Lines>
 
         <div style={{paddingTop: "250px"}}>
           {projectSections}

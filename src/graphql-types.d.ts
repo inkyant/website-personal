@@ -7,7 +7,6 @@ interface MarkdownData {
     frontmatter: {
         slug: string
         title: string
-        priority: number
     }
     fileAbsolutePath: string
     html: string
@@ -32,5 +31,13 @@ interface ImageQueryData {
   }
 }
 
+interface YamlQueryData {
+  yaml: {
+    nodes: {
+      folder: string
+    }[]
+  }
+}
+
 // Combine both types
-export interface QueryData extends MarkdownQueryData, ImageQueryData {}
+export interface QueryData extends MarkdownQueryData, ImageQueryData, YamlQueryData {}

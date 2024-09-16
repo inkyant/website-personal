@@ -1,7 +1,6 @@
 ---
 slug: "website"
 title: "Website"
-priority: 7 
 ---
 
 # Short Text

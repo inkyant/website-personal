@@ -1,7 +1,6 @@
 ---
 slug: "robotics"
 title: "Robotics"
-priority: 3
 ---
 
 # Short Text
