@@ -9,7 +9,7 @@ export default function Header() {
     function onClickContact() {
         const scrollArea = document.querySelector("#scrollArea")
         if (scrollArea) {
-            scrollArea.scrollTop = scrollArea.scrollHeight - scrollArea.clientHeight
+            scrollArea.scrollTo({top: scrollArea.scrollHeight - scrollArea.clientHeight, behavior: "smooth"})
         }
     }
 
@@ -21,7 +21,7 @@ export default function Header() {
                 </a>
                 <nav className={styles.headerNav}>
                     <Link to="/" className={styles.headerNavItem}>Home</Link>
-                    <Link to="/about" className={styles.headerNavItem}>About</Link>
+                    <a onClick={onClickContact} className={styles.headerNavItem}>Contact</a>
                 </nav>
             </div>
         </header>
