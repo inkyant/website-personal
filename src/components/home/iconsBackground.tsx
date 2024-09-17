@@ -23,17 +23,15 @@ export default function IconsBackground() {
     const makeIcons = (iconOffset: number, pos: {top: number, left?: number, right?: number}) => 
         <svg style={{position: 'absolute', ...pos, transform: 'translateZ(-10px)'}} width="500" 
              viewBox={"-10 0 92 "+(totalHeight - pos.top)*0.35} height={totalHeight - pos.top} fill="none" xmlns="http://www.w3.org/2000/svg">
-            {Array.from({ length: totalHeight / 1000 }, (_, index) => {
-                return <path key={index}
-                    transform={`scale(0.15) translate(${index%2 == 0 ? 0 : 200}, ${index*2500}) rotate(10)`}
-                    d={iconPaths[(index+iconOffset) % iconPaths.length]} 
-                    fill="#63BDFF"/>
-            })}
+            {Array.from({ length: totalHeight / 1000 }, (_, index) => 
+                <path key={index}
+                 transform={`scale(0.15) translate(${index%2 == 0 ? 0 : 200}, ${index*2500}) rotate(10)`}
+                 d={iconPaths[(index+iconOffset) % iconPaths.length]} fill="#63BDFF"/>
+            )}
         </svg>
     
     useEffect(() => {
         setTotalHeight(document.querySelector("#scrollArea")?.scrollHeight || 1)
-        console.log(totalHeight)
     }, [])
 
     return (
