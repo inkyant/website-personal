@@ -22,7 +22,7 @@ export default function IconsBackground() {
 
     const makeIcons = (iconOffset: number, pos: {top: number, left?: number, right?: number}) => 
         <svg style={{position: 'absolute', ...pos, transform: 'translateZ(-10px)'}} width="500" 
-             viewBox={"-10 0 92 "+totalHeight*0.35} height={totalHeight - pos.top} fill="none" xmlns="http://www.w3.org/2000/svg">
+             viewBox={"-10 0 92 "+(totalHeight - pos.top)*0.35} height={totalHeight - pos.top} fill="none" xmlns="http://www.w3.org/2000/svg">
             {Array.from({ length: totalHeight / 1000 }, (_, index) => {
                 return <path 
                     transform={`scale(0.15) translate(${index%2 == 0 ? 0 : 200}, ${index*2500}) rotate(10)`}
@@ -41,9 +41,16 @@ export default function IconsBackground() {
         <div style={{zIndex: -1, position: 'absolute', width: '100%', height: '100%', transformStyle: 'preserve-3d'}}>
 
             {/* Right Icons */}
-            {makeIcons(0, {top: 400, right: -200})}
+            {makeIcons(0, (document.querySelector("#scrollArea")?.scrollWidth || 600) < 600 ? 
+                {top: 800, right: -100} : 
+                {top: 400, right: -200}
+            )}
+            
             {/* Left Icons */}
-            {makeIcons(3, {top: 0, left: -200})}
+            { (document.querySelector("#scrollArea")?.scrollWidth || 600) < 600 ? 
+                <></> :
+                makeIcons(3, {top: 0, left: -200})
+            }
 
         </div>
     )
