@@ -34,10 +34,7 @@ export default function Project({title, textHtml, slug, images}: {title: string,
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
 
             <div className={`${styles.projectContent} ${animating ? styles.fadeinAnim : styles.fadeAnim}`}>
-                { (document.querySelector("#scrollArea")?.scrollWidth || 600) < 600 ? 
-                    <></> :
-                    slider
-                }
+                {slider}
                 
                 <div className={styles.projectText}>
                     <h3 className={styles.projectTitle}>{title}</h3>

@@ -1,6 +1,8 @@
 
 import React, { useEffect, useState } from "react";
 
+import { leftIcons, rightIcons } from '@styles/components/common/iconsBackground.module.scss'
+
 const iconPaths = [
     //wrench
     "M352 320c88.4 0 160-71.6 160-160c0-15.3-2.2-30.1-6.2-44.2c-3.1-10.8-16.4-13.2-24.3-5.3l-76.8 76.8c-3 3-7.1 4.7-11.3 4.7L336 192c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l76.8-76.8c7.9-7.9 5.4-21.2-5.3-24.3C382.1 2.2 367.3 0 352 0C263.6 0 192 71.6 192 160c0 19.1 3.4 37.5 9.5 54.5L19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L297.5 310.5c17 6.2 35.4 9.5 54.5 9.5zM80 408a24 24 0 1 1 0 48 24 24 0 1 1 0-48z",
@@ -20,9 +22,9 @@ export default function IconsBackground() {
 
     const [totalHeight, setTotalHeight] = useState(0)
 
-    const makeIcons = (iconOffset: number, pos: {top: number, left?: number, right?: number}) => 
-        <svg style={{position: 'absolute', ...pos, transform: 'translateZ(-10px)'}} width="500" 
-             viewBox={"-10 0 92 "+(totalHeight - pos.top)*0.35} height={totalHeight - pos.top} fill="none" xmlns="http://www.w3.org/2000/svg">
+    const makeIcons = (iconOffset: number, className: any, top: number) => 
+        <svg className={className} width="500" 
+             viewBox={"-10 0 92 "+(totalHeight - top)*0.35} height={totalHeight - top} fill="none" xmlns="http://www.w3.org/2000/svg">
             {Array.from({ length: totalHeight / 1000 }, (_, index) => 
                 <path key={index}
                  transform={`scale(0.15) translate(${index%2 == 0 ? 0 : 200}, ${index*2500}) rotate(10)`}
@@ -31,24 +33,18 @@ export default function IconsBackground() {
         </svg>
     
     useEffect(() => {
-        setTotalHeight(document.querySelector("#scrollArea")?.scrollHeight || 1)
+        setTotalHeight(document.querySelector("#scrollArea")?.scrollHeight || 1000)
     }, [])
 
     return (
         // The transformStyle and transform css gives a parallax effect in css, along with the perspective property on the scroller in layout.tsx
         <div style={{zIndex: -1, position: 'absolute', width: '100%', height: '100%', transformStyle: 'preserve-3d'}}>
 
-            {/* Right Icons */}
-            {makeIcons(0, (document.querySelector("#scrollArea")?.scrollWidth || 600) < 600 ? 
-                {top: 800, right: -100} : 
-                {top: 400, right: -200}
-            )}
+            {/* Right Icons, match top with iconsBackground.module.scss  */}
+            {makeIcons(0, rightIcons, 400)}
             
-            {/* Left Icons */}
-            { (document.querySelector("#scrollArea")?.scrollWidth || 600) < 600 ? 
-                <></> :
-                makeIcons(3, {top: 0, left: -200})
-            }
+            {/* Left Icons, match top with iconsBackground.module.scss */}
+            {makeIcons(3, leftIcons, 0)}
 
         </div>
     )

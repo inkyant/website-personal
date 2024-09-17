@@ -74,8 +74,10 @@
 
 @media (prefers-reduced-motion: no-preference) {
     .draw-anim {
-        animation: draw 1s;
-        animation-fill-mode: forwards;
+        @media (max-width: 600px) {
+            animation: draw 1s;
+            animation-fill-mode: forwards;
+        }
     }
     
     @keyframes draw {

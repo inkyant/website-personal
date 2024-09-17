@@ -1,0 +1,24 @@
+@import '../../globals.scss';
+
+.leftIcons,
+.rightIcons {
+    position: absolute; 
+    transform: translateZ(-10px);
+}
+
+.leftIcons {
+    top: 0px; // match top with iconsBackground.tsx
+    left: -150px;
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
+
+.rightIcons {
+    top: 400px; // match top with iconsBackground.tsx
+    right: -200px;
+    @media (max-width: 600px) {
+        top: 800px;
+        right: -100px;
+    }
+}
