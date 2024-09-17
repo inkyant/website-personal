@@ -76,7 +76,7 @@ export default function Lines({ count }: { count: number }) {
             // for mobile, last line has no special animation
             // dont use screenWidth, state is not updated at this point (could make ref to store)
             // by default assume desktop, if on mobile, css has media query to cancel animation
-            if ((scrollArea?.scrollWidth || 600) >= 600) {
+            if ((scrollArea?.clientWidth || 600) >= 600) {
                 // last line has special animation when reached the bottom
                 let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
                 
@@ -118,7 +118,7 @@ export default function Lines({ count }: { count: number }) {
     const finalLineCallback = (percent: number) => {
         drawingCallback(refs.length-1)
         let scrollArea = document.querySelector("#scrollArea")
-        if (scrollArea && scrollArea.scrollWidth < 600) {
+        if (scrollArea && scrollArea.clientWidth < 600) {
             let isCloseToBottom = Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < 5
             setAnimating(percent > 0.98 || isCloseToBottom)
         }

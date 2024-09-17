@@ -74,7 +74,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
     .draw-anim {
-        @media (max-width: 600px) {
+        @media (min-width: 600px) {
             animation: draw 1s;
             animation-fill-mode: forwards;
         }
