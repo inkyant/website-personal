@@ -14,20 +14,7 @@ interface MarkdownData {
 
 interface MarkdownQueryData {
   markdowns: {
-    edges: {node: MarkdownData}[]
-  }
-}
-
-// Define types for Image data
-interface ImagePath {
-    relativePath: string
-    publicURL: string
-    absolutePath: string
-}
-
-interface ImageQueryData {
-  images: {
-    edges: { node: ImagePath }[]
+    nodes: MarkdownData[]
   }
 }
 
@@ -35,9 +22,12 @@ interface YamlQueryData {
   yaml: {
     nodes: {
       folder: string
+      images: {
+        publicURL: string
+      }[] | null
     }[]
   }
 }
 
 // Combine both types
-export interface QueryData extends MarkdownQueryData, ImageQueryData, YamlQueryData {}
+export interface QueryData extends MarkdownQueryData, YamlQueryData {}

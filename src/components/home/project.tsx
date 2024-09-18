@@ -9,7 +9,7 @@ import { Link } from "gatsby";
 import { ImagePath } from "graphql-types";
 import Slider from "@components/common/slider";
 
-export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: ImagePath[]}) {
+export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: string[] | null}) {
     
     const slider = <Slider images={images} />
 

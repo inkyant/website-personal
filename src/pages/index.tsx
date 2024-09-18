@@ -11,7 +11,7 @@ import Project from "@components/home/project";
 import Layout from "@components/layout";
 import Lines from "@components/home/lines";
 import IconsBackground from "@components/home/iconsBackground";
-import { ImagePath, MarkdownData, QueryData } from "graphql-types";
+import { QueryData } from "graphql-types";
 
 // this is how the markdown should be formatted. 
 export const parseHtml = (html: string) => {
@@ -26,39 +26,26 @@ export const parseHtml = (html: string) => {
   )
 }
 
-interface FolderContent {
-  markdown: MarkdownData
-  images: ImagePath[]
-}
-
 export default function Home() {
 
   const data = useStaticQuery<QueryData>(graphql`
     query {
       markdowns: allMarkdownRemark {
-        edges {
-          node {
-            frontmatter {
-              slug
-              title
-            }
-            html
-            fileAbsolutePath
+        nodes {
+          frontmatter {
+            slug
+            title
           }
-        }
-      }
-      images: allFile(filter: { extension: { in: ["png", "jpg", "jpeg", "gif"] } }) {
-        edges {
-          node {
-            relativePath
-            publicURL
-            absolutePath
-          }
+          html
+          fileAbsolutePath
         }
       }
       yaml: allLayoutYaml {
         nodes {
           folder
+          images {
+            publicURL
+          }
         }
       }
     }
@@ -70,32 +57,17 @@ export default function Home() {
     return parts[parts.length - 2]
   }
 
-  // Process the data
-  const markdownFiles = data.markdowns.edges.map(edge => edge.node)
-  const imageFiles = data.images.edges
+  const projectSections = data.yaml.nodes.map(({ folder, images }) => {
 
-  // Group images and markdown by folder
-  const folderContents: { [key: string]: FolderContent } = {}
+    let markdown = data.markdowns.nodes.find(md => getFolderName(md.fileAbsolutePath) === folder)
+    let imagePaths = images?.map(i => i.publicURL)
 
-  markdownFiles.forEach(markdown => {
-    const folderName = getFolderName(markdown.fileAbsolutePath)
-    folderContents[folderName] = { markdown: markdown, images: [] }
-  })
-
-  imageFiles.forEach(({ node }) => {
-    const folderName = getFolderName(node.absolutePath)
-    if (folderContents[folderName]) {
-      folderContents[folderName].images.push(node)
-    }
-  })
-
-  const projectSections = data.yaml.nodes.map(({ folder }) => {
-    if (!folderContents[folder]) {
-      console.error("Unable to find folder " + folder + " specfied in yaml.")
+    if (!markdown) {
+      console.error("Could not find markdown for folder: " + folder)
       return <></>
     }
-    const { markdown, images } = folderContents[folder]
-    return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
+    
+    return <Project key={folder} title={markdown.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={imagePaths}></Project>
   })
 
   return (
