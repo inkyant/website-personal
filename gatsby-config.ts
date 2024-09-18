@@ -17,6 +17,9 @@ const config: GatsbyConfig = {
       },
     },
     `gatsby-transformer-remark`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`, // Needed for dynamic images
   ],
 };
 

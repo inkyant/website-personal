@@ -8,26 +8,18 @@ interface MarkdownData {
         slug: string
         title: string
     }
-    fileAbsolutePath: string
     html: string
 }
 
-interface MarkdownQueryData {
-  markdowns: {
-    edges: {node: MarkdownData}[]
-  }
-}
-
-// Define types for Image data
-interface ImagePath {
-    relativePath: string
-    publicURL: string
-    absolutePath: string
-}
-
-interface ImageQueryData {
-  images: {
-    edges: { node: ImagePath }[]
+interface ImageOrMarkdownQueryData {
+  imageOrMarkdown: {
+    nodes: {
+      childImageSharp: { gatsbyImageData: GatsbyImageData } | null
+      childMarkdownRemark: MarkdownData | null
+      relativeDirectory: string
+      extension: string
+      publicURL: string
+    }[]
   }
 }
 
@@ -40,4 +32,4 @@ interface YamlQueryData {
 }
 
 // Combine both types
-export interface QueryData extends MarkdownQueryData, ImageQueryData, YamlQueryData {}
+export interface QueryData extends ImageOrMarkdownQueryData, YamlQueryData {}

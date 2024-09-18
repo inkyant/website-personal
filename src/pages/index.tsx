@@ -35,25 +35,21 @@ export default function Home() {
 
   const data = useStaticQuery<QueryData>(graphql`
     query {
-      markdowns: allMarkdownRemark {
-        edges {
-          node {
+      imageOrMarkdown: allFile {
+        nodes {
+          childImageSharp {
+            gatsbyImageData(placeholder: BLURRED)
+          }
+          childMarkdownRemark {
+            html
             frontmatter {
               slug
               title
             }
-            html
-            fileAbsolutePath
           }
-        }
-      }
-      images: allFile(filter: { extension: { in: ["png", "jpg", "jpeg", "gif"] } }) {
-        edges {
-          node {
-            relativePath
-            publicURL
-            absolutePath
-          }
+          relativeDirectory
+          extension
+          publicURL
         }
       }
       yaml: allLayoutYaml {
@@ -64,37 +60,34 @@ export default function Home() {
     }
   `)
 
-  // Helper function to extract the folder name from the file path
-  const getFolderName = (path: string): string => {
-    const parts = path.split('/')
-    return parts[parts.length - 2]
-  }
-
-  // Process the data
-  const markdownFiles = data.markdowns.edges.map(edge => edge.node)
-  const imageFiles = data.images.edges
-
-  // Group images and markdown by folder
-  const folderContents: { [key: string]: FolderContent } = {}
-
-  markdownFiles.forEach(markdown => {
-    const folderName = getFolderName(markdown.fileAbsolutePath)
-    folderContents[folderName] = { markdown: markdown, images: [] }
-  })
-
-  imageFiles.forEach(({ node }) => {
-    const folderName = getFolderName(node.absolutePath)
-    if (folderContents[folderName]) {
-      folderContents[folderName].images.push(node)
-    }
-  })
-
   const projectSections = data.yaml.nodes.map(({ folder }) => {
-    if (!folderContents[folder]) {
+
+    let folderContents = data.imageOrMarkdown.nodes.filter((value) => value.relativeDirectory === folder)
+
+    if (folderContents.length < 1) {
       console.error("Unable to find folder " + folder + " specfied in yaml.")
       return <></>
     }
-    const { markdown, images } = folderContents[folder]
+
+    let markdown: MarkdownData | undefined;
+    let images: (GatsbyImageData | string)[] = []
+
+    folderContents.forEach((file) => {
+      if (file.childMarkdownRemark) {
+        markdown = file.childMarkdownRemark
+      }
+      else if (file.childImageSharp) {
+        images.push(file.childImageSharp.gatsbyImageData)
+      } else if (file.extension == "gif") {
+        images.push(file.publicURL)
+      }
+    })
+
+    if (!markdown) {
+      console.error("Unable to find markdown in " + folder + " specfied in yaml.")
+      return <></>
+    }
+
     return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
   })
 

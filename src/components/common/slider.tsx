@@ -1,9 +1,9 @@
 
 import * as styles from "@styles/components/common/slider.module.scss";
-import { ImagePath } from "graphql-types";
 import React, { useState } from 'react';
+import { GatsbyImage } from "gatsby-plugin-image"
 
-export default function Slider({ images }: { images: ImagePath[] }) {
+export default function Slider({ images }: { images: (GatsbyImageData | string)[] }) {
 
     if (images.length < 1) return <></>
 
@@ -24,7 +24,10 @@ export default function Slider({ images }: { images: ImagePath[] }) {
     return (
         <div className={styles.slider}>
             <div className={styles.imageContainer}>
-                <img src={images[currentIndex].publicURL} alt={`Slide ${currentIndex}`} className={styles.image} />
+                {typeof images[currentIndex] == "string" ?
+                <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className={styles.image} /> :
+                <GatsbyImage image={images[currentIndex]} alt={`Slide ${currentIndex}`} className={styles.image} /> 
+                }
             </div>
             <button className={styles.prevButton} onClick={goToPrevious}>‹</button>
             <button className={styles.nextButton} onClick={goToNext}>›</button>
