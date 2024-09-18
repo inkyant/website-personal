@@ -21,6 +21,9 @@ const config: GatsbyConfig = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`, // Needed for dynamic images
   ],
+  flags: {
+    PARALLEL_QUERY_RUNNING: false
+  }
 };
 
 export default config;
