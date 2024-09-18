@@ -31,10 +31,7 @@ const config: GatsbyConfig = {
         checkSupportedExtensions: false,
       },
     },
-  ],
-  flags: {
-    PARALLEL_QUERY_RUNNING: false
-  }
+  ]
 };
 
 export default config;

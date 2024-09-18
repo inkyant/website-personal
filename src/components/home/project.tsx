@@ -6,10 +6,9 @@ import { parseHtml } from "@pages";
 import { animOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 import { Link } from "gatsby";
-import { ImagePath } from "graphql-types";
 import Slider from "@components/common/slider";
 
-export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: (GatsbyImageData | string)[]}) {
+export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: GatsbyImageData[] | null}) {
     
     const slider = <Slider images={images} />
 

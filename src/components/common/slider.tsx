@@ -3,9 +3,9 @@ import * as styles from "@styles/components/common/slider.module.scss";
 import React, { useState } from 'react';
 import { GatsbyImage } from "gatsby-plugin-image"
 
-export default function Slider({ images }: { images: (GatsbyImageData | string)[] }) {
+export default function Slider({ images }: { images: GatsbyImageData[] | null}) {
 
-    if (images.length < 1) return <></>
+    if (!images || images.length < 1) return <></>
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -24,10 +24,7 @@ export default function Slider({ images }: { images: (GatsbyImageData | string)[
     return (
         <div className={styles.slider}>
             <div className={styles.imageContainer}>
-                {typeof images[currentIndex] == "string" ?
-                <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className={styles.image} /> :
-                <GatsbyImage image={images[currentIndex]} alt={`Slide ${currentIndex}`} className={styles.image} /> 
-                }
+            <GatsbyImage image={images[currentIndex]} alt={`Slide ${currentIndex}`} className={styles.image} /> 
             </div>
             <button className={styles.prevButton} onClick={goToPrevious}>‹</button>
             <button className={styles.nextButton} onClick={goToNext}>›</button>

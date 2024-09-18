@@ -30,14 +30,6 @@ export default function Home() {
 
   const data = useStaticQuery<QueryData>(graphql`
     query {
-      image: allFile(filter: {extension: {in: ["jpeg", "png", "jpg"]}}) {
-        nodes {
-          childImageSharp {
-            gatsbyImageData(placeholder: BLURRED)
-          }
-          relativeDirectory
-        }
-      }
       markdown: allFile(filter: {extension: {eq: "md"}}) {
         nodes {
           childMarkdownRemark {
@@ -50,21 +42,20 @@ export default function Home() {
           relativeDirectory
         }
       }
-      gif: allFile(filter: {extension: {eq: "gif"}}) {
-        nodes {
-          relativeDirectory
-          publicURL
-        }
-      }
       yaml: allLayoutYaml {
         nodes {
           folder
+          images {
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED)
+            }
+          }
         }
       }
     }
   `)
 
-  const projectSections = data.yaml.nodes.map(({ folder }) => {
+  const projectSections = data.yaml.nodes.map(({ folder, images }) => {
 
     const markdown = data.markdown.nodes.find(markdown => markdown.relativeDirectory === folder)?.childMarkdownRemark
 
@@ -73,10 +64,7 @@ export default function Home() {
       return <></>
     }
 
-    const images = data.image.nodes.filter(image => image.relativeDirectory === folder).map(i=>i.childImageSharp.gatsbyImageData)
-    const gif = data.gif.nodes.filter(gif => gif.relativeDirectory === folder).map(g=>g.publicURL)
-
-    return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images.concat(gif)}></Project>
+    return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images?.map(i=>i.childImageSharp.gatsbyImageData)}></Project>
   })
 
   return (

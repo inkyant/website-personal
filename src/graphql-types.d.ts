@@ -42,9 +42,14 @@ interface YamlQueryData {
   yaml: {
     nodes: {
       folder: string
+      images: {
+        childImageSharp: {
+          gatsbyImageData: GatsbyImageData
+        }
+      }[] | null
     }[]
   }
 }
 
 // Combine both types
-export interface QueryData extends ImageQueryData, MarkdownQueryData, GifQueryData, YamlQueryData {}
+export interface QueryData extends MarkdownQueryData, YamlQueryData {}

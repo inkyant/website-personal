@@ -1,5 +1,20 @@
 - folder: "RoboDog"
+  images: 
+    - "./RoboDog/b1_stairs.png"
+    - "./RoboDog/b1_nerf.png"
+
 - folder: "IronClawRobotics"
+  images: 
+    - "./IronClawRobotics/IMG_5981.jpeg"
+    - "./IronClawRobotics/robotics_with971.jpg"
+    - "./IronClawRobotics/marinus.jpeg"
+
 - folder: "Greenwise"
+  images: 
+    - "./Greenwise/hackathon_me.jpg"
+    - "./Greenwise/hackathon_team.jpg"
+    - "./Greenwise/work.jpg"
+
 - folder: "PlantAI"
+
 - folder: "PersonalWebsite"
