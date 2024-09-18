@@ -11,13 +11,28 @@ interface MarkdownData {
     html: string
 }
 
-interface ImageOrMarkdownQueryData {
-  imageOrMarkdown: {
+interface ImageQueryData {
+  image: {
     nodes: {
-      childImageSharp: { gatsbyImageData: GatsbyImageData } | null
-      childMarkdownRemark: MarkdownData | null
+      childImageSharp: { gatsbyImageData: GatsbyImageData }
       relativeDirectory: string
-      extension: string
+    }[]
+  }
+}
+
+interface MarkdownQueryData {
+  markdown: {
+    nodes: {
+      childMarkdownRemark: MarkdownData
+      relativeDirectory: string
+    }[]
+  }
+}
+
+interface GifQueryData {
+  gif: {
+    nodes: {
+      relativeDirectory: string
       publicURL: string
     }[]
   }
@@ -32,4 +47,4 @@ interface YamlQueryData {
 }
 
 // Combine both types
-export interface QueryData extends ImageOrMarkdownQueryData, YamlQueryData {}
+export interface QueryData extends ImageQueryData, MarkdownQueryData, GifQueryData, YamlQueryData {}

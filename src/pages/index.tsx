@@ -11,7 +11,7 @@ import Project from "@components/home/project";
 import Layout from "@components/layout";
 import Lines from "@components/home/lines";
 import IconsBackground from "@components/home/iconsBackground";
-import { ImagePath, MarkdownData, QueryData } from "graphql-types";
+import { QueryData } from "graphql-types";
 
 // this is how the markdown should be formatted. 
 export const parseHtml = (html: string) => {
@@ -26,20 +26,20 @@ export const parseHtml = (html: string) => {
   )
 }
 
-interface FolderContent {
-  markdown: MarkdownData
-  images: ImagePath[]
-}
-
 export default function Home() {
 
   const data = useStaticQuery<QueryData>(graphql`
     query {
-      imageOrMarkdown: allFile {
+      image: allFile(filter: {extension: {in: ["jpeg", "png", "jpg"]}}) {
         nodes {
           childImageSharp {
             gatsbyImageData(placeholder: BLURRED)
           }
+          relativeDirectory
+        }
+      }
+      markdown: allFile(filter: {extension: {eq: "md"}}) {
+        nodes {
           childMarkdownRemark {
             html
             frontmatter {
@@ -48,7 +48,11 @@ export default function Home() {
             }
           }
           relativeDirectory
-          extension
+        }
+      }
+      gif: allFile(filter: {extension: {eq: "gif"}}) {
+        nodes {
+          relativeDirectory
           publicURL
         }
       }
@@ -62,33 +66,17 @@ export default function Home() {
 
   const projectSections = data.yaml.nodes.map(({ folder }) => {
 
-    let folderContents = data.imageOrMarkdown.nodes.filter((value) => value.relativeDirectory === folder)
-
-    if (folderContents.length < 1) {
-      console.error("Unable to find folder " + folder + " specfied in yaml.")
-      return <></>
-    }
-
-    let markdown: MarkdownData | undefined;
-    let images: (GatsbyImageData | string)[] = []
-
-    folderContents.forEach((file) => {
-      if (file.childMarkdownRemark) {
-        markdown = file.childMarkdownRemark
-      }
-      else if (file.childImageSharp) {
-        images.push(file.childImageSharp.gatsbyImageData)
-      } else if (file.extension == "gif") {
-        images.push(file.publicURL)
-      }
-    })
+    const markdown = data.markdown.nodes.find(markdown => markdown.relativeDirectory === folder)?.childMarkdownRemark
 
     if (!markdown) {
       console.error("Unable to find markdown in " + folder + " specfied in yaml.")
       return <></>
     }
 
-    return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images}></Project>
+    const images = data.image.nodes.filter(image => image.relativeDirectory === folder).map(i=>i.childImageSharp.gatsbyImageData)
+    const gif = data.gif.nodes.filter(gif => gif.relativeDirectory === folder).map(g=>g.publicURL)
+
+    return <Project key={folder} title={markdown?.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={images.concat(gif)}></Project>
   })
 
   return (
