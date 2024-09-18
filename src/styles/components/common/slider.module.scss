@@ -15,13 +15,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: calc(100px + 10vw);
+    height: calc(100px + 10vw);
+    position: relative;
 }
 
 .image {
-    width: calc(100px + 10vw);
-    height: calc(100px + 10vw);
+    position: absolute;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 25px;
+    transition: opacity 0.5s ease;
     @media (max-width: 600px) {
         width: 100%;
     }
