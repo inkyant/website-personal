@@ -6,9 +6,17 @@
     margin-right: 15px;
     flex-grow: 0;
     flex-shrink: 0;
+    // fade in animation - only runs first time, to let images lazy-load
+    animation: fadein 2s;
+    animation-fill-mode: forwards;
     @media (max-width: 600px) {
         display: none;
     }
+}
+
+@keyframes fadein {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .imageContainer {
