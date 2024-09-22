@@ -20,7 +20,7 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     const drawnRef = useRef<SVGSVGElement>(null)
 
     React.useEffect(() => {
-        let draw = (entry: IntersectionObserverEntry) => {
+        const draw = (entry: IntersectionObserverEntry) => {
             // if the line is visible, draw it! Must be in the animation margin or will animate as it leaves at the margin
             if (entry.isIntersecting && entry.boundingClientRect.y > -ANIM_MARGIN_TOP) {
                 setDrawnPercent(entry.intersectionRatio)

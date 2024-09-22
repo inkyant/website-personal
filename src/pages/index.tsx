@@ -75,7 +75,7 @@ export default function Home() {
       <IconsBackground />
       <Welcome></Welcome>
 
-      <div>
+      <div style={{position: "relative"}}>
         <Lines count={data.yaml.nodes.length}></Lines>
 
         <div style={{paddingTop: "250px"}}>

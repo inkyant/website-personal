@@ -3,7 +3,10 @@
 
 .header {
     height: 60px;
-    margin: 18px;
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    z-index: 100;
 }
 
 .header-container {
@@ -14,7 +17,7 @@
 
 .header-title {
     font-size: 36px;
-    width:fit-content;
+    width: fit-content;
 }
 
 .header-nav {

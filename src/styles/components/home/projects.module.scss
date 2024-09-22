@@ -43,7 +43,8 @@
 }
 
 .end {
-    height: 450px;
+    height: 40vh;
+    min-height: 450px;
     @media (max-width: 600px) {
         height: 750px;
     }

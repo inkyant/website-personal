@@ -87,6 +87,8 @@ export default function Lines({ count }: { count: number }) {
                         // unset the line animation, unless at the bottom, then start it
                         refs[refs.length-1].current?.animDrawn(atBottom)
 
+                        if (atBottom) drawingCallback(refs.length-1)
+
                         // draw in arrow after a timeout (cant detect when css animation finishes so just manually time)
                         setTimeout(() => {
                             let nowClose = isCloseToBottom(5)
