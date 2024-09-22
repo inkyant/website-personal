@@ -33,7 +33,7 @@ export const lineAnimOptions = () => {return {
 export const loadInOptions = () => {
   let scrollArea = document.querySelector("#scrollArea")
   return {
-    rootMargin: ANIM_MARGIN_TOP*10 + "px 0px 0px 0px",
+    rootMargin: ANIM_MARGIN_TOP*15 + "px 0px 0px 0px",
     root: scrollArea,
   }
 }

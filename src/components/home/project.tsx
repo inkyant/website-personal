@@ -19,7 +19,7 @@ export default function Project({title, textHtml, slug, images}: {title: string,
     const projectRef = useRef<HTMLDivElement>(null)
 
     // loaded used for lazy-loading
-    const loaded = useRef(false)
+    const [loaded, setLoaded] = useState(false)
 
     const [animating, setAnimating] = useState(false)
 
@@ -34,7 +34,9 @@ export default function Project({title, textHtml, slug, images}: {title: string,
         // when they are almost visible, load them in
         return onVisible([projectRef.current], loadInOptions(),
             (entry: IntersectionObserverEntry) => {
-                loaded.current = loaded.current || entry.isIntersecting
+                if (!loaded && entry.isIntersecting) {
+                    setLoaded(true)
+                }
             }
         )
     }, [])
@@ -42,11 +44,10 @@ export default function Project({title, textHtml, slug, images}: {title: string,
     return (
     <section className={styles.project}>
         <div ref={projectRef}>
-            {loaded.current && <>
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
 
             <div className={`${styles.projectContent} ${animating ? styles.fadeinAnim : styles.fadeAnim}`}>
-                {slider}
+                {loaded && slider}
                 
                 <div className={styles.projectText}>
                     <h3 className={styles.projectTitle}>{title}</h3>
@@ -54,7 +55,6 @@ export default function Project({title, textHtml, slug, images}: {title: string,
                     <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
                 </div>
             </div> 
-            </>}
         </div>
     </section>
     )
