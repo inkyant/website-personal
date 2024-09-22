@@ -14,6 +14,9 @@ const ANIM_MARGIN_RATIO = 0.35
 // the margin above the top of the screen that still counts as "intersecting", so that lines don't undraw
 export const ANIM_MARGIN_TOP = 200
 
+// number of pixels above the element where you have to scroll to for it to start lazy loading
+const LOAD_MARGIN = 500
+
 // options is used by IntersectionObserver, see the docs. We configure it to callback every precision% and 
 // only call back at ANIM_MARGIN_RATIO*screenheight px above the bottom of the viewport
 export const animOptions = () => {
@@ -33,7 +36,7 @@ export const lineAnimOptions = () => {return {
 export const loadInOptions = () => {
   let scrollArea = document.querySelector("#scrollArea")
   return {
-    rootMargin: ANIM_MARGIN_TOP*15 + "px 0px 0px 0px",
+    rootMargin: "0px 0px "+LOAD_MARGIN+"px 0px",
     root: scrollArea,
   }
 }
