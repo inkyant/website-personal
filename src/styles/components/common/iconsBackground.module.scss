@@ -8,7 +8,7 @@
 
 .leftIcons {
     top: 0px; // match top with iconsBackground.tsx
-    left: -150px;
+    left: -300px;
     @media (max-width: 600px) {
         display: none;
     }
@@ -16,7 +16,7 @@
 
 .rightIcons {
     top: 400px; // match top with iconsBackground.tsx
-    right: -200px;
+    right: -350px;
     @media (max-width: 600px) {
         top: 800px;
         right: -100px;

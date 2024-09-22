@@ -72,7 +72,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <IconsBackground />
+      <IconsBackground sections={data.yaml.nodes.length} />
       <Welcome></Welcome>
 
       <div style={{position: "relative"}}>
