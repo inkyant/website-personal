@@ -22,7 +22,7 @@
     background-color: $color-background;
     z-index: 1;
     // fade in animation - only runs first time, to let images lazy-load
-    animation: fadeout 1s;
+    animation: fadeout 0.5s;
     animation-fill-mode: forwards;
 }
 
