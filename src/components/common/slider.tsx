@@ -24,7 +24,7 @@ export default function Slider({ images }: { images: string[] | null }) {
         <div className={styles.slider}>
             <div className={styles.imageContainer}>
                 {images.map((imagePath, index) => 
-                    <img src={imagePath} style={{opacity: index == currentIndex ? 1 : 0}} alt={`Slide ${currentIndex}`} className={styles.image} />
+                    <img key={index} src={imagePath} style={{opacity: index == currentIndex ? 1 : 0}} alt={`Slide ${currentIndex}`} className={styles.image} />
                 )}
             </div>
             <button className={styles.prevButton} onClick={goToPrevious}>‹</button>
