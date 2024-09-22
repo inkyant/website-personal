@@ -3,7 +3,10 @@
 
 .header {
     height: 60px;
-    margin: 18px;
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    z-index: 100;
 }
 
 .header-container {
@@ -13,8 +16,8 @@
 }
 
 .header-title {
-    font-size: 36px;
-    width:fit-content;
+    font-size: $font-large;
+    width: fit-content;
 }
 
 .header-nav {
@@ -22,7 +25,7 @@
     gap: 18px;
 
     &-item {
-        font-size: 24px;
+        font-size: $font-medium;
         color: $color-secondary;
         cursor: pointer;
     }

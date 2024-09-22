@@ -11,6 +11,7 @@ import Project from "@components/home/project";
 import Layout from "@components/layout";
 import Lines from "@components/home/lines";
 import IconsBackground from "@components/home/iconsBackground";
+import { QueryData } from "graphql-types";
 
 // this is how the markdown should be formatted. 
 export const parseHtml = (html: string) => {
@@ -27,43 +28,55 @@ export const parseHtml = (html: string) => {
 
 export default function Home() {
 
-  // just typescript things...
-  // ideally there would be a way to avoid having to write the schema twice like this, but I couldn't find one...
-  const { allFile: { nodes: data } } = useStaticQuery<
-  { allFile: 
-    { nodes: [{
-      childrenMarkdownRemark: [{
-        frontmatter: {slug: string, title: string}, 
-        html: string
-      }]
-    }]
-  }}>
-  (graphql`{
-    allFile {
-      nodes {
-        childrenMarkdownRemark {
+  const data = useStaticQuery<QueryData>(graphql`
+    query {
+      markdowns: allMarkdownRemark {
+        nodes {
           frontmatter {
             slug
             title
           }
           html
+          fileAbsolutePath
         }
       }
-    } 
-  }
+      yaml: allLayoutYaml {
+        nodes {
+          folder
+          images {
+            publicURL
+          }
+        }
+      }
+    }
   `)
 
-  const projectSections = data.map(({childrenMarkdownRemark: [project]}, index) =>
-    <Project key={index} title={project.frontmatter.title} textHtml={project.html} slug={project.frontmatter.slug}></Project>
-  )
+  // Helper function to extract the folder name from the file path
+  const getFolderName = (path: string): string => {
+    const parts = path.split('/')
+    return parts[parts.length - 2]
+  }
+
+  const projectSections = data.yaml.nodes.map(({ folder, images }) => {
+
+    let markdown = data.markdowns.nodes.find(md => getFolderName(md.fileAbsolutePath) === folder)
+    let imagePaths = images?.map(i => i.publicURL)
+
+    if (!markdown) {
+      console.error("Could not find markdown for folder: " + folder)
+      return <></>
+    }
+    
+    return <Project key={folder} title={markdown.frontmatter.title} textHtml={markdown.html} slug={markdown.frontmatter.slug} images={imagePaths}></Project>
+  })
 
   return (
     <Layout>
-      <IconsBackground/>
+      <IconsBackground sections={data.yaml.nodes.length} />
       <Welcome></Welcome>
 
-      <div>
-        <Lines></Lines>
+      <div style={{position: "relative"}}>
+        <Lines count={data.yaml.nodes.length}></Lines>
 
         <div style={{paddingTop: "250px"}}>
           {projectSections}

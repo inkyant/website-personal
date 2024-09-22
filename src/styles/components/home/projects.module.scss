@@ -6,34 +6,26 @@
 }
 
 .project-content {
+    display: flex;
+    align-items: center;
     opacity: 0;
-    margin: 0 270px 0 270px;
+    margin: 0 60px 0 250px;
     @media (max-width: 600px) {
         margin: 0 10px 0 100px;
+        flex-direction: column-reverse;
+        gap: 20px;
     }
 }
 
 .project-title {
-    font-size: 28px;
-    margin-bottom: 2px;
+    font-size: $font-large;
+    margin-bottom: 20px;
 }
 
-.project-text {
-    font-size: 20px;
-    margin-right: 20px;
-}
-
-.project-slider {
-
-    width: 95%;
-    height: 300px;
-    margin: 10px 0;
-
-    img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-    }
+.projectText {
+    font-size: $font-medium;
+    display: flex;
+    flex-direction: column;
 }
 
 .circle {
@@ -51,7 +43,8 @@
 }
 
 .end {
-    height: 450px;
+    height: 40vh;
+    min-height: 450px;
     @media (max-width: 600px) {
         height: 750px;
     }
@@ -64,12 +57,12 @@
 }
 
 .endLinksContainer {
-    font-size: 30px;
+    font-size: $font-large;
     display: flex;
     flex-direction: column;
     gap: 18px;
 
-    padding: 155px 0px 0px 420px;
+    padding: 142px 0px 0px 430px;
     @media (max-width: 600px) {
         padding: 430px 0px 0px 100px;
     }
@@ -82,8 +75,10 @@
 
 @media (prefers-reduced-motion: no-preference) {
     .draw-anim {
-        animation: draw 1s;
-        animation-fill-mode: forwards;
+        @media (min-width: 600px) {
+            animation: draw 1s;
+            animation-fill-mode: forwards;
+        }
     }
     
     @keyframes draw {

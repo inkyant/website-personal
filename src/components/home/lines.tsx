@@ -17,12 +17,17 @@ const yArrow = RADIUS*Math.sin(ANGLE)
 
 
 // shuffle the lines! for fun! I didn't make them dynamic for no reason... surely...
+const lineStart = "M13 0.5"
+const lineEnd = " 13 470"
 const linePaths = shuffle([
-    "M13 0.5C-30.5 285.5 94.5 281.5 13 470",
-    "M13 0.5C12.8414 50.8751 -1.10819 139.319 11.5 204C33.991 319.38 94.7921 398.423 100.5 330.5C107.266 249.982 34.3602 289.008 6.50001 360.5C-12.9849 410.5 33.8799 434.784 13 470",
-    "M13 0.5C3.28773 54.7716 38.6635 117.5 25.5 150.5C-46.5 331 79.409 315.61 13 470",
-    "M13 0.5C-30.5 285.5 94.5 281.5 13 470",
-])
+    "C-30.5 285.5 94.5 281.5",
+    "C12.8414 50.8751 -1.10819 139.319 11.5 204C33.991 319.38 94.7921 398.423 100.5 330.5C107.266 249.982 34.3602 289.008 6.50001 360.5C-12.9849 410.5 33.8799 434.784",
+    "C3.28773 54.7716 38.6635 117.5 25.5 150.5C-46.5 331 79.409 315.61",
+    "C-30.5 285.5 94.5 281.5",
+    "C3.28773 54.7716 38.6635 117.5 25.5 150.5C-46.5 331 79.409 315.61",
+    "C0 38.8853 129.1 123.031 0 152.53 C -54.1001 182.029 63.5 230.34 86.0001 256.316C104.5 277.675 105.1 348.749 ",
+    "C17.6667 16.0218 0.300035 64.8223 1.50004 135.85C3.00004 224.635 72 249.47 57.5 314.661C43 379.853 12.5 420.209 "
+].map((value) => lineStart + value + lineEnd))
 
 // randomize array function, from stackoverflow, the Fisher-Yates algorithm
 function shuffle(array: string[]) {
@@ -33,7 +38,7 @@ function shuffle(array: string[]) {
     return array
 }
 
-export default function Lines() {
+export default function Lines({ count }: { count: number }) {
 
     const [screenWidth, setScreenWidth] = React.useState(600) //window.innerWidth doesn't always work
     
@@ -47,11 +52,11 @@ export default function Lines() {
     let drawnProps = {width: 2 * screenWidth / 3, leftOffset: circleLeftPx}
 
     // make line refs: one for each project, and two more for start + end
-    const refs = Array(linePaths.length + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
+    const refs = Array(count + 2).fill('').map(() => React.useRef<DrawingHandle>(null))
 
     // map each path to an element that will draw the line
-    const lines = linePaths.map((path, index) => 
-        <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" path={path} {...drawnProps}></Drawn>
+    const lines = Array.from({ length: count }, (_, index) => 
+        <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" path={linePaths[index]} {...drawnProps}></Drawn>
     )
 
     // set up animation for first line and last line
@@ -70,7 +75,8 @@ export default function Lines() {
 
             // for mobile, last line has no special animation
             // dont use screenWidth, state is not updated at this point (could make ref to store)
-            if ((scrollArea?.scrollWidth || 600) >= 600) {
+            // by default assume desktop, if on mobile, css has media query to cancel animation
+            if ((scrollArea?.clientWidth || 600) >= 600) {
                 // last line has special animation when reached the bottom
                 let isCloseToBottom = (margin: number) => scrollArea && Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < margin
                 
@@ -80,6 +86,8 @@ export default function Lines() {
                         
                         // unset the line animation, unless at the bottom, then start it
                         refs[refs.length-1].current?.animDrawn(atBottom)
+
+                        if (atBottom) drawingCallback(refs.length-1)
 
                         // draw in arrow after a timeout (cant detect when css animation finishes so just manually time)
                         setTimeout(() => {
@@ -112,7 +120,7 @@ export default function Lines() {
     const finalLineCallback = (percent: number) => {
         drawingCallback(refs.length-1)
         let scrollArea = document.querySelector("#scrollArea")
-        if (scrollArea && scrollArea.scrollWidth < 600) {
+        if (scrollArea && scrollArea.clientWidth < 600) {
             let isCloseToBottom = Math.abs(scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop) < 5
             setAnimating(percent > 0.98 || isCloseToBottom)
         }

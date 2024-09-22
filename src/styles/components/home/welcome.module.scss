@@ -2,32 +2,39 @@
 @import '../../globals.scss';
 
 .welcomeSection {
-    margin: 35vh 0px 0px;
+    height: 67vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
 }
 
 .welcomeText {
-    font-size: 24px;
+    font-size: $font-medium;
     text-align: center;
+    position: absolute;
+    bottom: 16vh;
+    width: 100%;
 }
 
 .welcomeContinue {
     color: $color-accent;
-    font-size: 24px;
+    font-size: $font-medium;
     text-align: center;
     display: block;
     margin-bottom: 20px;
+    position: absolute;
+    bottom: 1vh;
+    width: 100%;
 }
 
-.welcomeLine {
-    
-    margin-top: 10vh;
-
-    .welcomeArrow {
-        // makes them centered and on top of each other
-        position: absolute;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-    }
+.welcomeArrow {
+    // makes them centered and on top of each other
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 67vh;
+    display: flex;
+    justify-content: center;
 }

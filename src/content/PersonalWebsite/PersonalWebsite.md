@@ -5,7 +5,7 @@ title: "Website"
 
 # Short Text
 
-Created this website in gatsby using **React**, creating all the UI effects myself.
+Created this website in gatsby using **React**, creating all the UI effects from scratch.
 
 # Full Text
 

@@ -16,17 +16,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "braces": ">=3.0.3",
     "gatsby": "^5.12.4",
     "gatsby-plugin-sass": "^6.12.0",
     "gatsby-source-filesystem": "^5.13.0",
     "gatsby-transformer-remark": "^6.13.0",
+    "gatsby-transformer-yaml": "^5.13.1",
+    "msgpackr": ">=1.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.68.0",
-    "braces": ">=3.0.3",
     "webpack-dev-middleware": ">=5.3.4",
     "ws": ">=8.17.1",
-    "msgpackr": ">=1.10.1"
+    "yaml": "^2.5.1",
+    "mini-css-extract-plugin": ">=2.9.1"
   },
   "devDependencies": {
     "@types/node": "^20.7.2",

@@ -1,32 +1,43 @@
 
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 import * as styles from '@styles/components/home/projects.module.scss'
 import { parseHtml } from "@pages";
-import { animOptions } from "@components/defines";
+import { animOptions, loadInOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 import { Link } from "gatsby";
+import Slider from "@components/common/slider";
 
-export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images?: string[]}) {
+export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: string[] | null}) {
     
-    let slider;
-
-    if (images) {
-        // TODO: add swiper
-    }
+    const slider = <Slider images={images} />
 
     // extract short text (line #2) and long text (line #3)
     let [ , shortText, , longText] = parseHtml(textHtml)
 
-    const circleRef = React.useRef<HTMLDivElement>(null)
-    const projectRef = React.useRef<HTMLDivElement>(null)
+    const circleRef = useRef<HTMLDivElement>(null)
+    const projectRef = useRef<HTMLDivElement>(null)
 
-    const [animating, setAnimating] = React.useState(false)
+    // loaded used for lazy-loading
+    const [loaded, setLoaded] = useState(false)
 
-    React.useEffect(() => {
+    const [animating, setAnimating] = useState(false)
+
+    useEffect(() => {
         // when they are visible, animate them in
         return onVisible([circleRef.current, projectRef.current], animOptions(),
             (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
+        )
+    }, [])
+
+    useEffect(() => {
+        // when they are almost visible, load them in
+        return onVisible([projectRef.current], loadInOptions(),
+            (entry: IntersectionObserverEntry) => {
+                if (!loaded && entry.isIntersecting) {
+                    setLoaded(true)
+                }
+            }
         )
     }, [])
 
@@ -36,17 +47,14 @@ export default function Project({title, textHtml, slug, images}: {title: string,
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
 
             <div className={`${styles.projectContent} ${animating ? styles.fadeinAnim : styles.fadeAnim}`}>
-
-                <h3 className={styles.projectTitle}>{title}</h3>
-                
-                {slider}
-
+                {loaded && slider}
                 
                 <div className={styles.projectText}>
+                    <h3 className={styles.projectTitle}>{title}</h3>
                     <p dangerouslySetInnerHTML={{ __html: shortText }}/>
                     <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
                 </div>
-            </div>
+            </div> 
         </div>
     </section>
     )
