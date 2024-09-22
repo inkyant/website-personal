@@ -11,3 +11,8 @@ $color-accent: #11da86;
 // for next two, also update defines.ts
 $circleSpacingWidescreen: 150px;
 $circleSpacingNarrowscreen: 37px;
+
+/* Font Sizes */
+$font-small: calc(18/16 * 1rem);
+$font-medium: calc(24/16 * 1rem);
+$font-large: calc(36/16 * 1rem);

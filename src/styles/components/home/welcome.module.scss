@@ -11,16 +11,16 @@
 }
 
 .welcomeText {
-    font-size: 24px;
+    font-size: $font-medium;
     text-align: center;
     position: absolute;
-    bottom: 10vh;
+    bottom: 16vh;
     width: 100%;
 }
 
 .welcomeContinue {
     color: $color-accent;
-    font-size: 24px;
+    font-size: $font-medium;
     text-align: center;
     display: block;
     margin-bottom: 20px;

@@ -18,12 +18,12 @@
 }
 
 .project-title {
-    font-size: 36px;
+    font-size: $font-large;
     margin-bottom: 20px;
 }
 
 .projectText {
-    font-size: 20px;
+    font-size: $font-medium;
     display: flex;
     flex-direction: column;
 }
@@ -57,12 +57,12 @@
 }
 
 .endLinksContainer {
-    font-size: 30px;
+    font-size: $font-large;
     display: flex;
     flex-direction: column;
     gap: 18px;
 
-    padding: 155px 0px 0px 420px;
+    padding: 142px 0px 0px 430px;
     @media (max-width: 600px) {
         padding: 430px 0px 0px 100px;
     }
