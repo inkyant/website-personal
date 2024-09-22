@@ -5,7 +5,7 @@ title: "Greenwise"
 
 # Short Text
 
-I **co-founded** Greenwise, and with VC funding from Berkeley Skydeck, am working on an **AI** enabled app to help consumers make eco friendly choices.
+I **co-founded** Greenwise with Berkeley Skydeck VC funding, which uses **AI** to help consumers make eco friendly choices.
 
 # Full Text
 
