@@ -24,7 +24,7 @@
     // fade in animation - only runs first time, to let images lazy-load
     animation: fadeout 1s;
     animation-fill-mode: forwards;
-  }
+}
 
 @keyframes fadeout {
     0%   { opacity: 1; }

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import * as styles from '@styles/components/home/projects.module.scss'
 import { parseHtml } from "@pages";
-import { animOptions } from "@components/defines";
+import { animOptions, loadInOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
 import { Link } from "gatsby";
 import Slider from "@components/common/slider";
@@ -17,24 +17,32 @@ export default function Project({title, textHtml, slug, images}: {title: string,
 
     const circleRef = useRef<HTMLDivElement>(null)
     const projectRef = useRef<HTMLDivElement>(null)
-    const loadedRef = useRef(false)
+
+    // loaded used for lazy-loading
+    const loaded = useRef(false)
 
     const [animating, setAnimating] = useState(false)
 
     useEffect(() => {
         // when they are visible, animate them in
         return onVisible([circleRef.current, projectRef.current], animOptions(),
+            (entry: IntersectionObserverEntry) => setAnimating(entry.isIntersecting)
+        )
+    }, [])
+
+    useEffect(() => {
+        // when they are almost visible, load them in
+        return onVisible([projectRef.current], loadInOptions(),
             (entry: IntersectionObserverEntry) => {
-                setAnimating(entry.isIntersecting)
-                loadedRef.current = loadedRef.current || entry.isIntersecting
+                loaded.current = loaded.current || entry.isIntersecting
             }
         )
     }, [])
-    
+
     return (
     <section className={styles.project}>
         <div ref={projectRef}>
-            {loadedRef.current && <>
+            {loaded.current && <>
             <div ref={circleRef} className={`${styles.circle} ${animating ? styles.growAnim : styles.ungrowAnim}`} />
 
             <div className={`${styles.projectContent} ${animating ? styles.fadeinAnim : styles.fadeAnim}`}>

@@ -29,3 +29,11 @@ export const lineAnimOptions = () => {return {
     threshold: Array.from({length: (1 / PRECISION) + 1}, (value, index) => index*PRECISION),
     ...animOptions(),
 }}
+
+export const loadInOptions = () => {
+  let scrollArea = document.querySelector("#scrollArea")
+  return {
+    rootMargin: ANIM_MARGIN_TOP*10 + "px 0px 0px 0px",
+    root: scrollArea,
+  }
+}
