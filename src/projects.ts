@@ -2,7 +2,11 @@
 // loads the project markdown and layout.yaml from src/content
 
 import { parse } from "yaml"
+import { getImage } from "astro:assets"
 import layoutYaml from "./content/layout.yaml?raw"
+
+// slider images are shown at most ~350px wide, so 800px covers high-DPI screens
+const IMAGE_WIDTH = 800
 
 type Markdown = {
   frontmatter: {
@@ -22,6 +26,8 @@ export type ProjectData = {
 
 const markdowns = import.meta.glob<Markdown>("./content/*/*.md", { eager: true })
 const images = import.meta.glob<{ default: ImageMetadata }>("./content/*/*.{png,jpg,jpeg,gif}", { eager: true })
+// videos are already compressed, so they're just copied into the build as-is
+const videos = import.meta.glob<string>("./content/*/*.{webm,mp4}", { eager: true, query: "?url", import: "default" })
 
 // Helper function to extract the folder name from the file path
 const getFolderName = (path: string): string => {
@@ -55,11 +61,15 @@ export async function getProjects(): Promise<ProjectData[]> {
       slug: markdown.frontmatter.slug,
       html: await markdown.compiledContent(),
       // image paths in layout.yaml are relative to src/content
-      images: imagePaths?.map(p => {
-        let image = images["./content/" + p.replace(/^\.\//, "")]
-        if (!image) throw new Error("Could not find image: " + p)
-        return image.default.src
-      }) ?? null,
+      images: imagePaths ? await Promise.all(imagePaths.map(async p => {
+        let path = "./content/" + p.replace(/^\.\//, "")
+        if (videos[path]) return videos[path]
+        let image = images[path]
+        if (!image) throw new Error("Could not find image or video: " + p)
+        // resize and convert to webp at build time
+        let optimized = await getImage({ src: image.default, width: IMAGE_WIDTH, format: "webp" })
+        return optimized.src
+      })) : null,
     }
   }))
 
