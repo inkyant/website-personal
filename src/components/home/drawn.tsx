@@ -1,7 +1,7 @@
 
 import React, { useRef } from "react";
 
-import { drawAnim } from '@styles/components/home/projects.module.scss'
+import styles from '@styles/components/home/projects.module.scss'
 import onVisible from "@components/common/visible";
 import { STROKE_WIDTH } from "@components/defines";
 import { ANIM_MARGIN_TOP, lineAnimOptions } from "@components/defines";
@@ -50,7 +50,7 @@ export default React.forwardRef<DrawingHandle, { path: string, height: number, w
     return (
         <>
             <svg viewBox={-leftOffset + " 0 " + width + " " + height} style={{display: "block"}} ref={drawnRef} height={height} fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path ref={inputRef} className={isEndAnim ? drawAnim : ''} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent}} d={path} stroke="white" strokeWidth={STROKE_WIDTH}/>
+                <path ref={inputRef} className={isEndAnim ? styles.drawAnim : ''} pathLength="1" strokeDasharray="1" style={{strokeDashoffset: 1-drawnPercent}} d={path} stroke="white" strokeWidth={STROKE_WIDTH}/>
             </svg>
         </>
     );

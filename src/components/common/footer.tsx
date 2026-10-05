@@ -1,7 +1,7 @@
 
 import React from "react"
 
-import * as styles from '@styles/components/common/footer.module.scss'
+import styles from '@styles/components/common/footer.module.scss'
 
 export default function Footer() {
   return (

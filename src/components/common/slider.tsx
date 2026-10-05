@@ -1,5 +1,5 @@
 
-import * as styles from "@styles/components/common/slider.module.scss";
+import styles from "@styles/components/common/slider.module.scss";
 import React, { useState } from 'react';
 
 export default function Slider({ images }: { images: string[] | null }) {

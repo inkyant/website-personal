@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import { leftIcons, rightIcons } from '@styles/components/common/iconsBackground.module.scss'
+import styles from '@styles/components/common/iconsBackground.module.scss'
 
 const iconPaths = [
     //wrench
@@ -36,10 +36,10 @@ export default function IconsBackground({ sections }: { sections: number }) {
         <div style={{zIndex: -1, position: 'absolute', width: '100%', height: '100%', transformStyle: 'preserve-3d'}}>
 
             {/* Right Icons, match top with iconsBackground.module.scss  */}
-            {makeIcons(0, rightIcons, 400)}
+            {makeIcons(0, styles.rightIcons, 400)}
             
             {/* Left Icons, match top with iconsBackground.module.scss */}
-            {makeIcons(3, leftIcons, 0)}
+            {makeIcons(3, styles.leftIcons, 0)}
 
         </div>
     )

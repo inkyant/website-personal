@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from "react"
 
-import * as styles from '@styles/components/home/projects.module.scss'
+import styles from '@styles/components/home/projects.module.scss'
 import { parseHtml } from "@components/parseHtml";
 import { animOptions, loadInOptions } from "@components/defines";
 import onVisible from "@components/common/visible";

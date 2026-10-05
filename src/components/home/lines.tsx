@@ -5,7 +5,7 @@ import Drawn from "@components/home/drawn";
 import type { DrawingHandle } from "./drawn";
 import onVisible from "@components/common/visible";
 
-import { fadeinAnim } from '@styles/components/home/projects.module.scss'
+import projectStyles from '@styles/components/home/projects.module.scss'
 import { STROKE_WIDTH } from "@components/defines";
 import { CIRCLE_LEFT_PX_NARROWSCREEN, CIRCLE_LEFT_PX_WIDESCREEN } from "@components/defines";
 
@@ -57,7 +57,7 @@ export default function Lines({ count }: { count: number }) {
 
     // map each path to an element that will draw the line
     const lines = Array.from({ length: count }, (_, index) => 
-        <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height="470" path={linePaths[index]} {...drawnProps}></Drawn>
+        <Drawn key={index} ref={refs[index+1]} drawingCallback={() => drawingCallback(index+1)} height={470} path={linePaths[index]} {...drawnProps}></Drawn>
     )
 
     // set up animation for first line and last line
@@ -133,7 +133,7 @@ export default function Lines({ count }: { count: number }) {
             
             {lines}
             
-            <svg style={{position: "absolute", left: circleLeftPx, opacity: animating ? 1 : 0}} className={animating ? fadeinAnim : ''} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg style={{position: "absolute", left: circleLeftPx, opacity: animating ? 1 : 0}} className={animating ? projectStyles.fadeinAnim : ''} height="483" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d={
                     // manually draw arrow based on if pointing up or down with two lines
                     // move to x, y position, but to account for stroke width need to move line slightly along angle
