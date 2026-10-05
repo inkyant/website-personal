@@ -2,39 +2,35 @@
   "name": "personal-website",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "personal-website",
   "author": "Anthony Furman",
   "keywords": [
-    "gatsby"
+    "astro"
   ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "braces": ">=3.0.3",
-    "gatsby": "^5.12.4",
-    "gatsby-plugin-sass": "^6.12.0",
-    "gatsby-source-filesystem": "^5.13.0",
-    "gatsby-transformer-remark": "^6.13.0",
-    "gatsby-transformer-yaml": "^5.13.1",
-    "msgpackr": ">=1.10.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.68.0",
-    "webpack-dev-middleware": ">=5.3.4",
-    "ws": ">=8.17.1",
-    "yaml": "^2.5.1",
-    "mini-css-extract-plugin": ">=2.9.1"
+    "@astrojs/markdown-satteri": "^0.4.2",
+    "@astrojs/react": "^7.0.0",
+    "astro": "^7.3.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sass": "^1.105.1",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "@types/node": "^20.7.2",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "typescript": "^5.1.6"
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
   }
 }

@@ -2,7 +2,7 @@
   images: 
     - "./RoboDog/b1_stair.png"
     - "./RoboDog/b1_nerf.png"
-    - "./RoboDog/superultracompressed_dog.gif"
+    - "./RoboDog/dog.webm"
 
 - folder: "IronClawRobotics"
   images:     

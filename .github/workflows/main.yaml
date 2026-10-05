@@ -1,28 +1,43 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# only one deployment at a time, but don't cancel one that's in progress
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build-site:
-    name: build gatsby site
+    name: build astro site
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: Install Project Dependencies
-        run: npm ci
-
-      - name: Install Gatsby CLI
-        run: npm install -g gatsby-cli@5.12.2
-      
+      # installs dependencies, builds, and uploads the site for github pages
       - name: Build
-        run: gatsby build
-      
-      - name: Verify build
-        run: ls -la public
+        uses: withastro/action@v6
+
+  deploy:
+    name: deploy to github pages
+    # pull requests just check that the site builds
+    if: github.event_name != 'pull_request'
+    needs: build-site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

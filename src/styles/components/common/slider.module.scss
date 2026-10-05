@@ -11,27 +11,6 @@
     }
 }
 
-.slider::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 25px;
-    background-color: $color-background;
-    z-index: 1;
-    // fade in animation - only runs first time, to let images lazy-load
-    animation: fadeout 0.5s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes fadeout {
-    0%   { opacity: 1; }
-    35%   { opacity: 1; }
-    100% { opacity: 0; }
-}
-
 .imageContainer {
     display: flex;
     justify-content: center;
@@ -39,6 +18,20 @@
     width: calc(100px + 10vw);
     height: calc(100px + 10vw);
     position: relative;
+    border-radius: 25px;
+    // placeholder shown behind the image until it loads and fades in
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .loading {
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { background-color: rgba(255, 255, 255, 0.05); }
+        50%      { background-color: rgba(255, 255, 255, 0.12); }
+    }
 }
 
 .image {

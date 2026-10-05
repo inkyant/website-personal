@@ -1,14 +1,13 @@
 
 import React, { useEffect, useRef, useState } from "react"
 
-import * as styles from '@styles/components/home/projects.module.scss'
-import { parseHtml } from "@pages";
+import styles from '@styles/components/home/projects.module.scss'
+import { parseHtml } from "@components/parseHtml";
 import { animOptions, loadInOptions } from "@components/defines";
 import onVisible from "@components/common/visible";
-import { Link } from "gatsby";
 import Slider from "@components/common/slider";
 
-export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: Text, images: string[] | null}) {
+export default function Project({title, textHtml, slug, images}: {title: string, textHtml: string, slug: string, images: string[] | null}) {
     
     const slider = <Slider images={images} />
 
@@ -52,7 +51,7 @@ export default function Project({title, textHtml, slug, images}: {title: string,
                 <div className={styles.projectText}>
                     <h3 className={styles.projectTitle}>{title}</h3>
                     <p dangerouslySetInnerHTML={{ __html: shortText }}/>
-                    <Link className={styles.readMoreLink} to={`/project/${slug}`}>Read More</Link>
+                    <a className={styles.readMoreLink} href={`/project/${slug}`}>Read More</a>
                 </div>
             </div> 
         </div>
