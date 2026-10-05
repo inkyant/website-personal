@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Home from "@components/home/home";
+import { getProjects } from "../projects";
+
+const projects = await getProjects();
+---
+
+<BaseLayout>
+	<Home client:load projects={projects} />
+</BaseLayout>

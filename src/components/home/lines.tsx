@@ -2,7 +2,7 @@
 import React from "react";
 
 import Drawn from "@components/home/drawn";
-import { DrawingHandle } from "./drawn";
+import type { DrawingHandle } from "./drawn";
 import onVisible from "@components/common/visible";
 
 import { fadeinAnim } from '@styles/components/home/projects.module.scss'

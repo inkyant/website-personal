@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "@components/layout";
+import { parseHtml } from "@components/parseHtml";
+import { getAllMarkdown } from "../../projects";
+import styles from "@styles/pages/projectPage.module.scss";
+
+export async function getStaticPaths() {
+	const markdowns = await getAllMarkdown();
+	return markdowns.map(({ slug, title, html }) => ({
+		params: { slug },
+		props: { title, html },
+	}));
+}
+
+const { title, html } = Astro.props;
+let [, , , longText] = parseHtml(html);
+---
+
+<BaseLayout>
+	<Layout client:load>
+		<h1 class={styles.title}>{title}</h1>
+		<p class={styles.text}>
+			{longText}
+		</p>
+	</Layout>
+</BaseLayout>

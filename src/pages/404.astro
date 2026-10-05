@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Layout from "@components/layout";
+
+import { main } from "@styles/pages/404.module.scss";
+---
+
+<BaseLayout>
+	<Layout client:load>
+		<div class={main}>
+			<p>Sorry 😔, we couldn't find what you were looking for.</p>
+			<br />
+			<a href="/">Click to go home</a>.
+		</div>
+	</Layout>
+</BaseLayout>
