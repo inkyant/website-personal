@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import { satteri } from '@astrojs/markdown-satteri';
 import { fileURLToPath } from 'node:url';
+import { qrcode } from 'vite-plugin-qrcode';
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,5 +27,7 @@ export default defineConfig({
       // the scss files share variables via @import, which sass has deprecated
       preprocessorOptions: { scss: { silenceDeprecations: ['import'] } },
     },
+    plugins: [qrcode()],
+    server: { host: true },
   },
 });
